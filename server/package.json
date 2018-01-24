@@ -1,0 +1,40 @@
+{
+  "name": "test-docker-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app/index.js",
+  "scripts": {
+    "dev": "npm-run-all --parallel watch:server watch:build",
+    "watch:server": "nodemon \"./dist/bundle.js\" --watch \"./dist\" --exec babel-node ./dist/bundle.js",
+    "watch:build": "webpack --watch",
+    "prod": "webpack -p",
+    "build": "webpack",
+    "clean": "rm -rf node_modules",
+    "clean-all": "npm run clean && rm -rf dist",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "lgosse",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.2",
+    "express-session": "^1.15.6",
+    "mongoose": "^4.13.9",
+    "mongoose-findorcreate": "^2.0.0",
+    "morgan": "^1.9.0",
+    "nodemon": "^1.14.11",
+    "npm-run-all": "^4.1.2",
+    "passport": "^0.4.0",
+    "passport-spotify": "^0.3.1",
+    "webpack": "^3.10.0",
+    "webpack-node-externals": "^1.6.0",
+    "winston": "^3.0.0-rc1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-es2017": "^6.24.1"
+  }
+}

@@ -1,0 +1,32 @@
+version: "2"
+services:
+  front-end:
+    container_name: awesome_react
+    build: front-end
+    volumes:
+      - ./front-end:/var/html/app
+      - /var/html/app/node_modules
+    ports:
+      - "3000:3000"
+    links:
+      - "server"
+  server:
+    container_name: wonderful_node
+    build: server
+    volumes:
+      - ./server:/usr/app/
+      - /usr/app/node_modules
+    ports:
+      - "4200:4200"
+    links:
+      - mongo
+  mongo:
+    container_name: fantastic_mongo
+    image: mongo
+    restart: always
+    volumes:
+      - mongodata:/data/db
+    ports:
+      - "27017:27017"
+volumes:
+  mongodata:
