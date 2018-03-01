@@ -1,10 +1,21 @@
-# gitignore
+# dependencies
+/node_modules
 
-node_modules
+# IDE
+/.idea
+/.awcache
+/.vscode
 
-# Only apps should have lockfiles
-yarn.lock
-package-lock.json
+# misc
+npm-debug.log
 
-data
-env.js
+# example
+/quick-start
+
+# tests
+/test
+/coverage
+/.nyc_output
+
+# dist
+/dist
