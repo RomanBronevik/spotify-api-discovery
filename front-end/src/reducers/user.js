@@ -1,9 +1,8 @@
 // @flow
 
-import React from "react";
-import { push } from "react-router-redux";
-import type { Action } from "../action";
-import environment from "../environments/environment";
+import { push } from 'react-router-redux';
+import type { Action } from '../action';
+import environment from '../environments/environment';
 
 export type User =
   | {
@@ -20,24 +19,24 @@ export type User =
   | {};
 
 export const getUser = () => (dispatch: Function) => {
-  fetch(`${environment.server.baseURL}/user`, {
-    method: "GET",
-    credentials: "include"
+  fetch(`${environment.server.baseURL}/users/me`, {
+    method: 'GET',
+    credentials: 'include'
   })
     .then(response => response.json())
     .then(user => {
-      dispatch({ type: "USER_GET", user });
-      dispatch(push("/home"));
+      dispatch({ type: 'USER_GET', user });
+      dispatch(push('/home'));
     })
     .catch(error => {
       console.log(error);
-      dispatch({ type: "FETCH_ERROR", error });
+      dispatch({ type: 'FETCH_ERROR', error });
     });
 };
 
 const user = (state: User = {}, action: Action): User => {
   switch (action.type) {
-    case "USER_GET": {
+    case 'USER_GET': {
       return action.user;
     }
 

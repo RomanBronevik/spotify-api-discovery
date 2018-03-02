@@ -1,21 +1,20 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { push } from "react-router-redux";
-import styled from "styled-components";
-import { Route } from "react-router";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
+import { Route } from 'react-router';
 
 // MaterialUI imports
-import muiThemeable from "material-ui/styles/muiThemeable";
-import AppBar from "material-ui/AppBar";
+import muiThemeable from 'material-ui/styles/muiThemeable';
+import AppBar from 'material-ui/AppBar';
 
 // Routing imports
-import Login from "./Login";
+import Login from './Login';
 
-import { getUser } from "../reducers/user";
+import { getUser } from '../reducers/user';
 
 const containerStyle = {
-  height: "100vh",
-  width: "100%"
+  height: '100vh',
+  width: '100%'
 };
 
 const Container = muiThemeable()(props => {
@@ -34,10 +33,9 @@ const Container = muiThemeable()(props => {
 class Layout extends Component {
   componentDidMount() {
     if (!this.props.user.id) {
-      if (this.props.location.pathname.indexOf("/login/success") === -1) {
+      if (this.props.location.pathname.indexOf('/login/success') === -1) {
         this.props.navigateToLogin();
       } else {
-        console.log("yolo");
         this.props.getUser();
       }
     }
@@ -64,7 +62,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     navigateToLogin: () => {
-      dispatch(push("/login"));
+      dispatch(push('/login'));
     },
     getUser: () => {
       dispatch(getUser());

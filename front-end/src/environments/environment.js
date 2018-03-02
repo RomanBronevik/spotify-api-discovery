@@ -1,6 +1,10 @@
 export default {
   server: {
-    baseURL: `${window.location.protocol}//${window.location.hostname}:4200`,
-    authPath: "/auth/spotify"
+    host: 'localhost',
+    port: '3000',
+    get baseURL() {
+      return `http://${this.host}:${this.port}`;
+    },
+    authPath: '/auth/spotify'
   }
 };

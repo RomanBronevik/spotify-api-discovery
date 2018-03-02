@@ -8,18 +8,6 @@ services:
       - /var/html/app/node_modules
     ports:
       - "3000:3000"
-    links:
-      - "server"
-  server:
-    container_name: wonderful_node
-    build: server
-    volumes:
-      - ./server:/usr/app/
-      - /usr/app/node_modules
-    ports:
-      - "4200:4200"
-    links:
-      - mongo
   mongo:
     container_name: fantastic_mongo
     image: mongo
