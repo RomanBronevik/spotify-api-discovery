@@ -30,10 +30,7 @@ export class UsersController {
    * @memberof UsersController
    */
   @Get('me')
-  async getCurrentUser(
-    @Req() request: Request,
-    @Res() response: Response
-  ): Promise<User> {
+  async getCurrentUser(@Req() request: Request): Promise<User> {
     return await this.usersService.fetchCurrentUser(request);
   }
 }

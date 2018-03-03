@@ -23,30 +23,10 @@ import { AuthenticationController } from './authentication.controller';
  *
  * @export
  * @class AuthenticationModule
- * @implements {NestModule}
  */
 @Module({
   imports: [UsersModule, HttpModule, UtilsModule],
   components: [AuthenticationService],
   controllers: [AuthenticationController]
 })
-export class AuthenticationModule implements NestModule {
-  /**
-   * Implementation of NestModule configure method
-   * Sets up expressSession
-   *
-   * @param {MiddlewaresConsumer} consumer
-   * @memberof AuthenticationModule
-   */
-  public configure(consumer: MiddlewaresConsumer) {
-    AuthenticationMiddleware.configure({
-      secret: sessionSecretKey,
-      resave: false,
-      saveUninitialized: true,
-      cookie: { secure: false }
-    });
-    consumer
-      .apply(AuthenticationMiddleware)
-      .forRoutes(AuthenticationController, UsersController);
-  }
-}
+export class AuthenticationModule {}
