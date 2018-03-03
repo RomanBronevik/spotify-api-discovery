@@ -1,6 +1,11 @@
+import { environment } from './environments/environment';
+
 export const UserModelToken = 'UserModelToken';
 export const UsersServiceToken = 'UsersServiceToken';
 export const DbConnectionToken = 'DbConnectionToken';
+
+export const sessionSecretKey =
+  '6A0DC01B09051FD1DF261D41F5B17C7FDE1A64C1BE2A51C002F93B69EB48061D';
 
 export const SpotifyApplicationScopes = [
   'user-read-private',
@@ -21,3 +26,15 @@ export const SpotifyApplicationScopes = [
   'user-follow-read',
   'streaming'
 ];
+
+export const spotifyAuthStateKey = 'spotify_auth_state';
+export const spotifyAccountsBaseURL = 'https://accounts.spotify.com';
+export const spotifyAuthorizeURL = `${spotifyAccountsBaseURL}/authorize`;
+export const spotifyTokenURL = `${spotifyAccountsBaseURL}/api/token`;
+export const spotifyCallbackURL = `${
+  environment.server.url
+}/auth/spotify/callback`;
+export const loginSuccessURL = `${environment.front.url}/login/success`;
+export const loginFailureURL = `${environment.front.url}/login/failure`;
+
+export const spotifyApiURL = 'https://api.spotify.com/v1';

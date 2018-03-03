@@ -1,23 +1,51 @@
+/**
+ * Spotify's User class
+ *
+ * @export
+ * @class CreateUserDto
+ */
 export class CreateUserDto {
+  /**
+   * Creates an instance of CreateUserDto.
+   * Mapped upon User interface.
+   *
+   * @param {*} user
+   * @memberof CreateUserDto
+   */
   constructor(user: any) {
     this.id = user.id;
-    this.username = user.username;
-    this.displayName = user.displayName;
-    this.profileUrl = user.profileUrl;
-    this.photos = user.photos;
+    this.birthdate = user.birthdate;
     this.country = user.country;
+    this.displayName = user.display_name;
+    this.email = user.email;
+    this.externalURLs = user.external_urls;
     this.followers = user.followers;
+    this.href = user.href;
+    this.images = user.images;
     this.product = user.product;
-    this.emails = user.emails;
+    this.type = user.type;
+    this.uri = user.uri;
   }
 
   readonly id: string;
-  readonly username: string;
-  readonly displayName: string;
-  readonly profileUrl: string;
-  readonly photos: string[];
+  readonly birthdate: string;
   readonly country: string;
-  readonly followers: number;
+  readonly displayName: string;
+  readonly email: string;
+  readonly externalURLs: {
+    readonly [key: string]: string;
+  };
+  readonly followers: {
+    readonly href: string;
+    readonly total: number;
+  };
+  readonly href: string;
+  readonly images: {
+    height: number;
+    width: number;
+    url: string;
+  };
   readonly product: string;
-  readonly emails: string[];
+  readonly type: string;
+  readonly uri: string;
 }

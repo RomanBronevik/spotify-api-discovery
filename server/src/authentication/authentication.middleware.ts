@@ -4,15 +4,38 @@ import * as expressSession from 'express-session';
 
 import { RequestHandler } from 'express';
 
+/**
+ * Authentication Middleware
+ * Handle expressSession
+ *
+ * @export
+ * @class AuthenticationMiddleware
+ * @implements {NestMiddleware}
+ */
 @Middleware()
 export class AuthenticationMiddleware implements NestMiddleware {
-  // DELETE THESE LINES IF MIDDLEWARE DOES NOT TAKE OPTIONS
+  /**
+   * Implementation of NestMiddleware configure method.
+   * Sets the options for expressSession
+   *
+   * @static
+   * @param {expressSession.SessionOptions} opts
+   * @memberof AuthenticationMiddleware
+   */
   public static configure(opts: expressSession.SessionOptions) {
     this.options = opts;
   }
 
   private static options: expressSession.SessionOptions;
 
+  /**
+   * Implementation of NestMiddleware resolve method.
+   * Sets the expressSession
+   *
+   * @param {string} name
+   * @returns {ExpressMiddleware}
+   * @memberof AuthenticationMiddleware
+   */
   public resolve(name: string): ExpressMiddleware {
     return (req, res, next) => {
       if (AuthenticationMiddleware.options) {

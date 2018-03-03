@@ -1,23 +1,23 @@
 import * as mongoose from 'mongoose';
 
 export const UserSchema = new mongoose.Schema({
-  id: {
-    type: String,
-    unique: true
-  },
-  username: String,
-  displayName: String,
-  profileUrl: String,
-  photos: [String],
+  id: String,
+  birthdate: String,
   country: String,
-  followers: Number,
+  displayName: String,
+  email: String,
+  externalURLs: {},
+  followers: {
+    href: String,
+    total: Number
+  },
+  href: String,
+  images: {
+    height: Number,
+    width: Number,
+    url: String
+  },
   product: String,
-  emails: [
-    {
-      value: String,
-      type: {
-        type: 'Mixed'
-      }
-    }
-  ]
+  type: String,
+  uri: String
 });
