@@ -1,3 +1,4 @@
+import { SpotifyAPIModule } from './spotify-api/spotify-api.module';
 import { Module, MiddlewaresConsumer, NestModule } from '@nestjs/common';
 
 import { AppController } from './app.controller';
@@ -18,7 +19,13 @@ import { UtilsModule } from './utils/utils.module';
  * @class ApplicationModule
  */
 @Module({
-  imports: [AuthenticationModule, UsersModule, HttpModule, UtilsModule],
+  imports: [
+    AuthenticationModule,
+    UsersModule,
+    HttpModule,
+    UtilsModule,
+    SpotifyAPIModule
+  ],
   controllers: [AppController]
 })
 export class ApplicationModule implements NestModule {
