@@ -1,6 +1,8 @@
 import { Controller, Get, Param } from '@nestjs/common';
 
 import { AccessToken } from './../../authentication/access-token.decorator';
+import { AudioAnalysisService } from './audio-analysis.service';
+import { SpotifyAudioAnalysis } from './classes/spotify-audio-analysis.class';
 
 @Controller('audio-analysis')
 export class AudioAnalysisController {
