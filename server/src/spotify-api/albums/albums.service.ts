@@ -1,10 +1,10 @@
 import { Component } from '@nestjs/common';
 import * as querystring from 'querystring';
 
-import { SpotifyAlbum } from './classes/album.class';
+import { SpotifyAlbum } from './classes/spotify-album.class';
 import { SpotifyClient } from './../../http/spotify.client';
-import { SpotifyAlbumAPIResponse } from './interfaces/album-spotify-api-response.interface';
 import { SpotifyTrack } from '../tracks/classes/spotify-track.class';
+import { AxiosResponse } from 'axios';
 
 /**
  * Wrapper around albums catefory of spotify Web API service
@@ -36,9 +36,9 @@ export class AlbumsService {
     albumId: string,
     market?: string
   ): Promise<SpotifyAlbum> {
-    let response;
+    let response: AxiosResponse<SpotifyAlbum>;
     try {
-      response = await this.spotifyClient.get(
+      response = await this.spotifyClient.get<SpotifyAlbum>(
         `/albums/${albumId}${market ? `?market=${market}` : ''}`,
         accessToken
       );
@@ -67,9 +67,9 @@ export class AlbumsService {
     limit?: number,
     offset?: number
   ): Promise<SpotifyTrack[]> {
-    let response;
+    let response: AxiosResponse<SpotifyTrack[]>;
     try {
-      response = await this.spotifyClient.get(
+      response = await this.spotifyClient.get<SpotifyTrack[]>(
         `/albums/${albumId}/tracks${
           market || limit || offset
             ? `?${querystring.stringify({
@@ -102,9 +102,9 @@ export class AlbumsService {
     ids: string,
     market?: string
   ): Promise<SpotifyAlbum[]> {
-    let response;
+    let response: AxiosResponse<SpotifyAlbum[]>;
     try {
-      response = await this.spotifyClient.get(
+      response = await this.spotifyClient.get<SpotifyAlbum[]>(
         `/albums?ids=${ids}${market ? `market=${market}` : ''}`,
         accessToken
       );

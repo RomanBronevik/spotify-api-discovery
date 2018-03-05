@@ -25,7 +25,7 @@ export interface SpotifySimplifiedAlbumAPIResponse {
    * @type {SpotifyAlbumType}
    * @memberof SpotifySimplifiedAlbumAPIResponse
    */
-  readonly albumType: SpotifyAlbumType;
+  readonly album_type: SpotifyAlbumType;
 
   /**
    * The artists of the album. Each artist object includes a link in href to
@@ -44,7 +44,7 @@ export interface SpotifySimplifiedAlbumAPIResponse {
    * @type {string[]}
    * @memberof SpotifySimplifiedAlbumAPIResponse
    */
-  readonly availableMarkets: string[];
+  readonly available_markets: string[];
 
   /**
    * Known external URLs for this album.
@@ -52,7 +52,7 @@ export interface SpotifySimplifiedAlbumAPIResponse {
    * @type {SpotifyExternalURLs}
    * @memberof SpotifySimplifiedAlbumAPIResponse
    */
-  readonly externalURLs: SpotifyExternalURLs;
+  readonly external_urls: SpotifyExternalURLs;
 
   /**
    * A link to the Web API endpoint providing full details of the album.
@@ -86,7 +86,7 @@ export interface SpotifySimplifiedAlbumAPIResponse {
    * @type {string}
    * @memberof SpotifySimplifiedAlbumAPIResponse
    */
-  readonly releaseDate: string;
+  readonly release_date: string;
 
   /**
    * The precision with which release_date value is known: year , month ,
@@ -95,7 +95,7 @@ export interface SpotifySimplifiedAlbumAPIResponse {
    * @type {SpotifyReleaseDatePrecision}
    * @memberof SpotifySimplifiedAlbumAPIResponse
    */
-  readonly releaseDatePrecision: SpotifyReleaseDatePrecision;
+  readonly release_date_precision: SpotifyReleaseDatePrecision;
 
   /**
    * The object type: “album”

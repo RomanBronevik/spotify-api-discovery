@@ -1,8 +1,9 @@
+import { SpotifyAlbumType } from '../types/spotify-album-type.type';
+import { SpotifySimplifiedAlbumAPIResponse } from './../interfaces/spotify-simplified-album-api-response.interface';
+import { SpotifyExternalURLs } from './../types/spotify-external-urls.type';
 import { SpotifyReleaseDatePrecision } from './../types/spotify-release-date-precision.type';
 import { SpotifyImage } from './spotify-image.class';
-import { SpotifyExternalURLs } from './../types/spotify-external-urls.type';
 import { SpotifySimplifiedArtist } from './spotify-simplified-artist.class';
-import { SpotifyAlbumType } from '../types/spotify-album-type.type';
 
 /**
  * SpotifySimplifiedAlbum

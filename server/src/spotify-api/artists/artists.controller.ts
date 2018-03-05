@@ -1,9 +1,10 @@
-import { Track } from './../tracks/classes/track.class';
-import { Album } from './../albums/classes/album.class';
+import { SpotifyArtist } from './classes/spotify-artist.class';
 import { Controller, Param, Get, Query } from '@nestjs/common';
 
 import { ArtistsService } from './artists.service';
 import { AccessToken } from './../../authentication/access-token.decorator';
+import { SpotifyAlbum } from './../albums/classes/spotify-album.class';
+import { SpotifyTrack } from '../tracks/classes/spotify-track.class';
 
 /**
  * Spotify API wrapper artists controller
@@ -26,14 +27,14 @@ export class ArtistsController {
    *
    * @param {string} accessToken
    * @param {string} id
-   * @returns {Promise<Artist>}
+   * @returns {Promise<SpotifyArtist>}
    * @memberof ArtistsController
    */
   @Get(':id')
   async getArtist(
     @AccessToken() accessToken: string,
     @Param('id') id: string
-  ): Promise<Artist> {
+  ): Promise<SpotifyArtist> {
     return await this.artistsService.getArtist(accessToken, id);
   }
 
@@ -42,14 +43,14 @@ export class ArtistsController {
    *
    * @param {string} accessToken
    * @param {string} ids
-   * @returns {Promise<Artist[]>}
+   * @returns {Promise<SpotifyArtist[]>}
    * @memberof ArtistsController
    */
   @Get()
   async getSeveralArtists(
     @AccessToken() accessToken: string,
     @Query('ids') ids: string
-  ): Promise<Artist[]> {
+  ): Promise<SpotifyArtist[]> {
     return await this.artistsService.getSeveralArtists(accessToken, ids);
   }
 
@@ -62,7 +63,7 @@ export class ArtistsController {
    * @param {string} [market]
    * @param {number} [limit]
    * @param {number} [offset]
-   * @returns {Promise<Album[]>}
+   * @returns {Promise<SpotifyAlbum[]>}
    * @memberof ArtistsController
    */
   @Get(':id/albums')
@@ -73,7 +74,7 @@ export class ArtistsController {
     @Query('market') market?: string,
     @Query('limit') limit?: number,
     @Query('offset') offset?: number
-  ): Promise<Album[]> {
+  ): Promise<SpotifyAlbum[]> {
     return this.artistsService.getArtistAlbums(
       accessToken,
       id,
@@ -90,7 +91,7 @@ export class ArtistsController {
    * @param {string} accessToken
    * @param {string} id
    * @param {string} [country]
-   * @returns {Promise<Track[]>}
+   * @returns {Promise<SpotifyTrack[]>}
    * @memberof ArtistsController
    */
   @Get(':id/top-tracks')
@@ -98,7 +99,7 @@ export class ArtistsController {
     @AccessToken() accessToken: string,
     @Param('id') id: string,
     @Query('country') country?: string
-  ): Promise<Track[]> {
+  ): Promise<SpotifyTrack[]> {
     return await this.artistsService.getArtistTopTracks(
       accessToken,
       id,
@@ -111,14 +112,14 @@ export class ArtistsController {
    *
    * @param {string} accessToken
    * @param {string} id
-   * @returns {Promise<Artist[]>}
+   * @returns {Promise<SpotifyArtist[]>}
    * @memberof ArtistsController
    */
   @Get(':id/related-artists')
   async getArtistRelatedArtists(
     @AccessToken() accessToken: string,
     @Param('id') id: string
-  ): Promise<Artist[]> {
+  ): Promise<SpotifyArtist[]> {
     return await this.artistsService.getArtistRelatedArtists(accessToken, id);
   }
 }

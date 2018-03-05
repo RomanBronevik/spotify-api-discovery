@@ -1,4 +1,4 @@
-import { SpotifyArtistType } from './../types/spotify-artist-type.type';
+import { SpotifyEntityType } from './../types/spotify-entity-type.type';
 import { SpotifyExternalURLs } from './../types/spotify-external-urls.type';
 
 /**
@@ -43,10 +43,10 @@ export interface SpotifySimplifiedArtistAPIResponse {
   /**
    * The object type: "artist"
    *
-   * @type {SpotifyArtistType}
+   * @type {SpotifyEntityType}
    * @memberof SpotifySimplifiedArtistAPIResponse
    */
-  readonly type: SpotifyArtistType;
+  readonly type: SpotifyEntityType;
 
   /**
    * The Spotify URI for the artist.

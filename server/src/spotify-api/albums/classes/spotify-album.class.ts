@@ -1,13 +1,16 @@
-import { SpotifyEntityType } from './../../types/types/spotify-entity-type.type';
-import { SpotifyPaging } from './../../types/classes/spotify-paging.class';
-import { SpotifyReleaseDatePrecision } from './../../types/types/spotify-release-date-precision.type';
-import { SpotifyExternalURLs } from './../../types/types/spotify-external-urls.type';
-import { SpotifyExternalIDs } from './../../types/types/spotify-external-ids.type';
-import { SpotifyAlbumType } from './../../types/types/spotify-album-type.type';
-import { SpotifyCopyright } from './../../types/classes/spotify-copyright.class';
-import { SpotifyAlbumAPIResponse } from './../interfaces/album-spotify-api-response.interface';
-import { SpotifySimplifiedArtist } from '../../types/classes/spotify-simplified-artist.class';
 import { SpotifyImage } from '../../types/classes/spotify-image.class';
+import { SpotifySimplifiedArtist } from '../../types/classes/spotify-simplified-artist.class';
+import { SpotifySimplifiedTrack } from '../../types/classes/spotify-simplified-track.class';
+import { SpotifyCopyright } from './../../types/classes/spotify-copyright.class';
+import { SpotifyPaging } from './../../types/classes/spotify-paging.class';
+import { SpotifySimplifiedTrackAPIResponse } from './../../types/interfaces/spotify-simplified-track-api-response.interface';
+import { SpotifyAlbumType } from './../../types/types/spotify-album-type.type';
+import { SpotifyEntityType } from './../../types/types/spotify-entity-type.type';
+import { SpotifyExternalIDs } from './../../types/types/spotify-external-ids.type';
+import { SpotifyExternalURLs } from './../../types/types/spotify-external-urls.type';
+import { SpotifyReleaseDatePrecision } from './../../types/types/spotify-release-date-precision.type';
+import { SpotifyAlbumAPIResponse } from './../interfaces/spotify-album-api-response.interface';
+
 /**
  * Album
  *
@@ -38,8 +41,8 @@ export class SpotifyAlbum {
     this.releaseDate = album.release_date;
     this.releaseDatePrecision = album.release_date_precision;
     this.tracks = new SpotifyPaging<
-      SpotifySimplfiedTrack,
-      SpotifySimplfiedTrackAPIResponse
+      SpotifySimplifiedTrack,
+      SpotifySimplifiedTrackAPIResponse
     >(
       album.tracks,
       album.tracks.items.map(item => new SpotifySimplifiedTrack(item))
@@ -183,7 +186,10 @@ export class SpotifyAlbum {
    * @type {SpotifyPaging<SpotifySimplifiedTrack>}
    * @memberof SpotifyAlbum
    */
-  readonly tracks: SpotifyPaging<SpotifySimplifiedTrack>;
+  readonly tracks: SpotifyPaging<
+    SpotifySimplifiedTrack,
+    SpotifySimplifiedTrackAPIResponse
+  >;
 
   /**
    * The object type: “album”

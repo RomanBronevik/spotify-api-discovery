@@ -1,8 +1,9 @@
-import { SpotifyTrack } from './../tracks/classes/spotify-track.class';
-import { SpotifyAlbum } from './classes/album.class';
-import { AccessToken } from './../../authentication/access-token.decorator';
 import { Controller, Get, Req, Param, Query, Headers } from '@nestjs/common';
 import { Request } from 'express';
+
+import { AccessToken } from './../../authentication/access-token.decorator';
+import { SpotifyAlbum } from './classes/spotify-album.class';
+import { SpotifyTrack } from './../tracks/classes/spotify-track.class';
 
 import { AlbumsService } from './albums.service';
 
