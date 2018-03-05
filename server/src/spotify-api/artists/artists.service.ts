@@ -1,11 +1,16 @@
-import { AxiosResponse, AxiosError } from 'axios';
 import { Component } from '@nestjs/common';
+import { AxiosResponse } from 'axios';
 import * as querystring from 'querystring';
 
 import { SpotifyClient } from './../../http/spotify.client';
 import { SpotifyAlbum } from './../albums/classes/spotify-album.class';
+import { SpotifyAlbumAPIResponse } from './../albums/interfaces/spotify-album-api-response.interface';
 import { SpotifyTrack } from './../tracks/classes/spotify-track.class';
+import { SpotifyTrackAPIResponse } from './../tracks/interfaces/spotify-track-api-response.interface';
+import { SpotifyPaging } from './../types/classes/spotify-paging.class';
+import { SpotifyPagingAPIResponse } from './../types/interfaces/spotify-paging-api-response.interface';
 import { SpotifyArtist } from './classes/spotify-artist.class';
+import { SpotifyArtistAPIResponse } from './interfaces/spotify-artist-api-response.interface';
 
 /**
  * Wrapper around artists catefory of spotify Web API service
@@ -35,10 +40,10 @@ export class ArtistsService {
     accessToken: string,
     id: string
   ): Promise<SpotifyArtist> {
-    let response: AxiosResponse<SpotifyArtist>;
+    let response: AxiosResponse<SpotifyArtistAPIResponse>;
 
     try {
-      response = await this.spotifyClient.get<SpotifyArtist>(
+      response = await this.spotifyClient.get<SpotifyArtistAPIResponse>(
         `/artists/${id}`,
         accessToken
       );
@@ -46,7 +51,9 @@ export class ArtistsService {
       console.error(error);
     }
 
-    return response.data;
+    const artist = new SpotifyArtist(response.data);
+
+    return artist;
   }
 
   /**
@@ -61,18 +68,21 @@ export class ArtistsService {
     accessToken: string,
     ids: string
   ): Promise<SpotifyArtist[]> {
-    let response: AxiosResponse<SpotifyArtist[]>;
+    let response: AxiosResponse<{ artists: SpotifyArtistAPIResponse[] }>;
 
     try {
-      response = await this.spotifyClient.get<SpotifyArtist[]>(
-        `/artists?ids=${ids}`,
-        accessToken
-      );
+      response = await this.spotifyClient.get<{
+        artists: SpotifyArtistAPIResponse[];
+      }>(`/artists?ids=${ids}`, accessToken);
     } catch (error) {
       console.error(error);
     }
 
-    return response.data;
+    const artists = response.data.artists.map(
+      artist => new SpotifyArtist(artist)
+    );
+
+    return artists;
   }
 
   /**
@@ -84,7 +94,7 @@ export class ArtistsService {
    * @param {string} [market]
    * @param {number} [limit]
    * @param {number} [offset]
-   * @returns {Promise<SpotifyAlbum[]>}
+   * @returns {Promise<SpotifyPaging<SpotifyAlbum[]>>}
    * @memberof ArtistsService
    */
   public async getArtistAlbums(
@@ -94,11 +104,15 @@ export class ArtistsService {
     market?: string,
     limit?: number,
     offset?: number
-  ): Promise<SpotifyAlbum[]> {
-    let response: AxiosResponse<SpotifyAlbum[]>;
+  ): Promise<SpotifyPaging<SpotifyAlbum, SpotifyAlbumAPIResponse>> {
+    let response: AxiosResponse<
+      SpotifyPagingAPIResponse<SpotifyAlbumAPIResponse>
+    >;
 
     try {
-      response = await this.spotifyClient.get<SpotifyAlbum[]>(
+      response = await this.spotifyClient.get<
+        SpotifyPagingAPIResponse<SpotifyAlbumAPIResponse>
+      >(
         `/artists/${id}/albums${
           albumType || market || limit || offset
             ? `?${querystring.stringify({
@@ -115,7 +129,12 @@ export class ArtistsService {
       console.error(error);
     }
 
-    return response.data;
+    const albums = new SpotifyPaging<SpotifyAlbum, SpotifyAlbumAPIResponse>(
+      response.data,
+      response.data.items.map(item => new SpotifyAlbum(item))
+    );
+
+    return albums;
   }
 
   /**
@@ -132,10 +151,12 @@ export class ArtistsService {
     id: string,
     country?: string
   ): Promise<SpotifyTrack[]> {
-    let response: AxiosResponse<SpotifyTrack[]>;
+    let response: AxiosResponse<{ tracks: SpotifyTrackAPIResponse[] }>;
 
     try {
-      response = await this.spotifyClient.get<SpotifyTrack[]>(
+      response = await this.spotifyClient.get<{
+        tracks: SpotifyTrackAPIResponse[];
+      }>(
         `artists/${id}/top-tracks${country ? `?country=${country}` : ''}`,
         accessToken
       );
@@ -143,7 +164,11 @@ export class ArtistsService {
       console.error(error);
     }
 
-    return response.data;
+    const topTracks = response.data.tracks.map(
+      track => new SpotifyTrack(track)
+    );
+
+    return topTracks;
   }
 
   /**
@@ -158,17 +183,20 @@ export class ArtistsService {
     accessToken: string,
     id: string
   ): Promise<SpotifyArtist[]> {
-    let response: AxiosResponse<SpotifyArtist[]>;
+    let response: AxiosResponse<{ artists: SpotifyArtistAPIResponse[] }>;
 
     try {
-      response = await this.spotifyClient.get<SpotifyArtist[]>(
-        `/artists/${id}/related-artists`,
-        accessToken
-      );
+      response = await this.spotifyClient.get<{
+        artists: SpotifyArtistAPIResponse[];
+      }>(`/artists/${id}/related-artists`, accessToken);
     } catch (error) {
       console.error(error);
     }
 
-    return response.data;
+    const relatedArtists = response.data.artists.map(
+      artist => new SpotifyArtist(artist)
+    );
+
+    return relatedArtists;
   }
 }

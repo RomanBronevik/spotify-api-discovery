@@ -1,3 +1,4 @@
+import { SpotifyEntityType } from './../../types/types/spotify-entity-type.type';
 import { SpotifyFollowersAPIResponse } from './../../types/interfaces/spotify-followers-api-response.interface';
 import { SpotifyImageAPIResponse } from './../../types/interfaces/spotify-image-api-response.interface';
 import { SpotifyExternalURLs } from './../../types/types/spotify-external-urls.type';
@@ -73,10 +74,10 @@ export interface SpotifyArtistAPIResponse {
   /**
    * The object type: "artist"
    *
-   * @type {String}
+   * @type {SpotifyEntityType}
    * @memberof SpotifyArtistAPIResponse
    */
-  readonly type: string;
+  readonly type: SpotifyEntityType;
 
   /**
    * The Spotify URI for the artist.

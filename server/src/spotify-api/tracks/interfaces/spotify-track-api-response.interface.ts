@@ -1,3 +1,4 @@
+import { SpotifyEntityType } from './../../types/types/spotify-entity-type.type';
 import { SpotifyLinkedTrackAPIResponse } from './../../types/interfaces/spotify-linked-track-api-response.interface';
 import { SpotifySimplifiedArtistAPIResponse } from './../../types/interfaces/spotify-simplified-artist-api-response.interface';
 import { SpotifyRestrictions } from './../../types/types/spotify-restrictions.type';
@@ -175,10 +176,10 @@ export class SpotifyTrackAPIResponse {
   /**
    * The object type: “track”.
    *
-   * @type {string}
+   * @type {SpotifyEntityType}
    * @memberof SpotifyTrackAPIResponse
    */
-  readonly type: string;
+  readonly type: SpotifyEntityType;
 
   /**
    * The Spotify URI for the track.

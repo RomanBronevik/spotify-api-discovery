@@ -1,10 +1,12 @@
-import { SpotifyArtist } from './classes/spotify-artist.class';
-import { Controller, Param, Get, Query } from '@nestjs/common';
+import { Controller, Get, Param, Query } from '@nestjs/common';
 
-import { ArtistsService } from './artists.service';
+import { SpotifyAlbumAPIResponse } from '../albums/interfaces/spotify-album-api-response.interface';
+import { SpotifyTrack } from '../tracks/classes/spotify-track.class';
+import { SpotifyPaging } from '../types/classes/spotify-paging.class';
 import { AccessToken } from './../../authentication/access-token.decorator';
 import { SpotifyAlbum } from './../albums/classes/spotify-album.class';
-import { SpotifyTrack } from '../tracks/classes/spotify-track.class';
+import { ArtistsService } from './artists.service';
+import { SpotifyArtist } from './classes/spotify-artist.class';
 
 /**
  * Spotify API wrapper artists controller
@@ -74,7 +76,7 @@ export class ArtistsController {
     @Query('market') market?: string,
     @Query('limit') limit?: number,
     @Query('offset') offset?: number
-  ): Promise<SpotifyAlbum[]> {
+  ): Promise<SpotifyPaging<SpotifyAlbum, SpotifyAlbumAPIResponse>> {
     return this.artistsService.getArtistAlbums(
       accessToken,
       id,

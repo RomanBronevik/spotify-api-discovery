@@ -1,3 +1,4 @@
+import { SpotifyEntityType } from './../types/spotify-entity-type.type';
 import { SpotifyAlbumType } from './../types/spotify-album-type.type';
 import { SpotifyReleaseDatePrecision } from './../types/spotify-release-date-precision.type';
 import { SpotifyImageAPIResponse } from './spotify-image-api-response.interface';
@@ -100,10 +101,10 @@ export interface SpotifySimplifiedAlbumAPIResponse {
   /**
    * The object type: “album”
    *
-   * @type {string}
+   * @type {SpotifyEntityType}
    * @memberof SpotifySimplifiedAlbumAPIResponse
    */
-  readonly type: string;
+  readonly type: SpotifyEntityType;
 
   /**
    * 	The Spotify URI for the album.

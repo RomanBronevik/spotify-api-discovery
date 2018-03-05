@@ -2,6 +2,7 @@ import { SpotifyFollowers } from '../../types/classes/spotify-followers.class';
 import { SpotifyImage } from '../../types/classes/spotify-image.class';
 import { SpotifyExternalURLs } from '../../types/types/spotify-external-urls.type';
 import { SpotifyArtistAPIResponse } from './../interfaces/spotify-artist-api-response.interface';
+import { SpotifyEntityType } from '../../types/types/spotify-entity-type.type';
 
 /**
  * SpotifyArtist
@@ -100,10 +101,10 @@ export class SpotifyArtist {
   /**
    * The object type: "artist"
    *
-   * @type {String}
+   * @type {SpotifyEntityType}
    * @memberof SpotifyArtist
    */
-  readonly type: string;
+  readonly type: SpotifyEntityType;
 
   /**
    * The Spotify URI for the artist.

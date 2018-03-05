@@ -1,3 +1,4 @@
+import { SpotifyTrackAPIResponse } from './../tracks/interfaces/spotify-track-api-response.interface';
 import { Controller, Get, Req, Param, Query, Headers } from '@nestjs/common';
 import { Request } from 'express';
 
@@ -6,6 +7,7 @@ import { SpotifyAlbum } from './classes/spotify-album.class';
 import { SpotifyTrack } from './../tracks/classes/spotify-track.class';
 
 import { AlbumsService } from './albums.service';
+import { SpotifyPaging } from '../types/classes/spotify-paging.class';
 
 /**
  * Spotify API wrapper albums controller
@@ -53,7 +55,7 @@ export class AlbumsController {
     @Query('market') market: string,
     @Query('limit') limit?: number,
     @Query('offset') offset?: number
-  ): Promise<SpotifyTrack[]> {
+  ): Promise<SpotifyPaging<SpotifyTrack, SpotifyTrackAPIResponse>> {
     return await this.albumsService.getAlbumTracks(
       accessToken,
       id,

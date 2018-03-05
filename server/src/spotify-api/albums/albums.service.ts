@@ -1,3 +1,7 @@
+import { SpotifyAlbumAPIResponse } from './interfaces/spotify-album-api-response.interface';
+import { SpotifyPagingAPIResponse } from './../types/interfaces/spotify-paging-api-response.interface';
+import { SpotifyTrackAPIResponse } from './../tracks/interfaces/spotify-track-api-response.interface';
+import { SpotifyPaging } from './../types/classes/spotify-paging.class';
 import { Component } from '@nestjs/common';
 import * as querystring from 'querystring';
 
@@ -66,10 +70,15 @@ export class AlbumsService {
     market?: string,
     limit?: number,
     offset?: number
-  ): Promise<SpotifyTrack[]> {
-    let response: AxiosResponse<SpotifyTrack[]>;
+  ): Promise<SpotifyPaging<SpotifyTrack, SpotifyTrackAPIResponse>> {
+    let response: AxiosResponse<
+      SpotifyPagingAPIResponse<SpotifyTrackAPIResponse>
+    >;
+
     try {
-      response = await this.spotifyClient.get<SpotifyTrack[]>(
+      response = await this.spotifyClient.get<
+        SpotifyPagingAPIResponse<SpotifyTrackAPIResponse>
+      >(
         `/albums/${albumId}/tracks${
           market || limit || offset
             ? `?${querystring.stringify({
@@ -85,7 +94,12 @@ export class AlbumsService {
       console.error(error);
     }
 
-    return response.data;
+    const tracks = new SpotifyPaging<SpotifyTrack, SpotifyTrackAPIResponse>(
+      response.data,
+      response.data.items.map(item => new SpotifyTrack(item))
+    );
+
+    return tracks;
   }
 
   /**
@@ -102,16 +116,18 @@ export class AlbumsService {
     ids: string,
     market?: string
   ): Promise<SpotifyAlbum[]> {
-    let response: AxiosResponse<SpotifyAlbum[]>;
+    let response: AxiosResponse<{ albums: SpotifyAlbumAPIResponse[] }>;
+
     try {
-      response = await this.spotifyClient.get<SpotifyAlbum[]>(
-        `/albums?ids=${ids}${market ? `market=${market}` : ''}`,
-        accessToken
-      );
+      response = await this.spotifyClient.get<{
+        albums: SpotifyAlbumAPIResponse[];
+      }>(`/albums?ids=${ids}${market ? `market=${market}` : ''}`, accessToken);
     } catch (error) {
       console.error(error);
     }
 
-    return response.data;
+    const albums = response.data.albums.map(album => new SpotifyAlbum(album));
+
+    return albums;
   }
 }

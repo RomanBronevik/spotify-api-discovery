@@ -1,3 +1,4 @@
+import { SpotifyEntityType } from './../types/spotify-entity-type.type';
 import { SpotifyAlbumType } from '../types/spotify-album-type.type';
 import { SpotifySimplifiedAlbumAPIResponse } from './../interfaces/spotify-simplified-album-api-response.interface';
 import { SpotifyExternalURLs } from './../types/spotify-external-urls.type';
@@ -125,10 +126,10 @@ export class SpotifySimplifiedAlbum {
   /**
    * The object type: “album”
    *
-   * @type {string}
+   * @type {SpotifyEntityType}
    * @memberof SpotifySimplifiedAlbum
    */
-  readonly type: string;
+  readonly type: SpotifyEntityType;
 
   /**
    * 	The Spotify URI for the album.

@@ -1,3 +1,4 @@
+import { SpotifyEntityType } from './../../types/types/spotify-entity-type.type';
 import { SpotifyRestrictions } from './../../types/types/spotify-restrictions.type';
 import { SpotifyLinkedTrack } from './../../types/classes/spotify-linked-track.class';
 import { SpotifyExternalURLs } from './../../types/types/spotify-external-urls.type';
@@ -206,10 +207,10 @@ export class SpotifyTrack {
   /**
    * The object type: “track”.
    *
-   * @type {string}
+   * @type {SpotifyEntityType}
    * @memberof SpotifyTrack
    */
-  readonly type: string;
+  readonly type: SpotifyEntityType;
 
   /**
    * The Spotify URI for the track.
