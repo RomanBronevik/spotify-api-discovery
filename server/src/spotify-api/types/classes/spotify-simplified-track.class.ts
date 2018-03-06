@@ -1,8 +1,8 @@
+import { SpotifyExternalURLs } from '../types/spotify-external-urls.type';
 import { SpotifySimplifiedTrackAPIResponse } from './../interfaces/spotify-simplified-track-api-response.interface';
 import { SpotifyEntityType } from './../types/spotify-entity-type.type';
-import { SpotifySimplifiedArtist } from './spotify-simplified-artist.class';
-import { SpotifyExternalURLs } from '../types/spotify-external-urls.type';
 import { SpotifyLinkedTrack } from './spotify-linked-track.class';
+import { SpotifySimplifiedArtist } from './spotify-simplified-artist.class';
 
 /**
  * SpotifySimplifiedTrack
@@ -14,28 +14,43 @@ export class SpotifySimplifiedTrack {
   /**
    * Creates an instance of SpotifySimplifiedTrack.
    *
-   * @param {SpotifySimplifiedTrackAPIResponse} track
+   * @param {SpotifySimplifiedTrack} track
    * @memberof SpotifySimplifiedTrack
    */
-  constructor(track: SpotifySimplifiedTrackAPIResponse) {
-    this.id = track.id;
+  constructor(track: SpotifySimplifiedTrack) {
+    Object.keys(track).forEach(key => {
+      this[key] = track[key];
+    });
+  }
 
-    this.artists = track.artists.map(
-      artist => new SpotifySimplifiedArtist(artist)
-    );
-    this.availableMarkets = track.available_markets;
-    this.discNumber = track.disc_number;
-    this.durationMs = track.duration_ms;
-    this.explicit = track.explicit;
-    this.externalURLs = track.external_urls;
-    this.href = track.href;
-    this.isPlayable = track.is_playable;
-    this.linkedFrom = new SpotifyLinkedTrack(track.linked_from);
-    this.name = track.name;
-    this.previewURL = track.preview_url;
-    this.trackNumber = track.track_number;
-    this.type = track.type;
-    this.uri = track.uri;
+  /**
+   * Load SpotifySimplifiedTrack from JSON
+   *
+   * @static
+   * @param {SpotifySimplifiedTrackAPIResponse} track
+   * @returns
+   * @memberof SpotifySimplifiedTrack
+   */
+  static fromJSON(track: SpotifySimplifiedTrackAPIResponse) {
+    return new this({
+      id: track.id,
+      artists: track.artists.map(artist =>
+        SpotifySimplifiedArtist.fromJSON(artist)
+      ),
+      availableMarkets: track.available_markets,
+      discNumber: track.disc_number,
+      durationMs: track.duration_ms,
+      explicit: track.explicit,
+      externalURLs: track.external_urls,
+      href: track.href,
+      isPlayable: track.is_playable,
+      linkedFrom: SpotifyLinkedTrack.fromJSON(track.linked_from),
+      name: track.name,
+      previewURL: track.preview_url,
+      trackNumber: track.track_number,
+      type: track.type,
+      uri: track.uri
+    });
   }
 
   /**

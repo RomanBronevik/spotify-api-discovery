@@ -1,6 +1,6 @@
+import { SpotifySimplifiedArtistAPIResponse } from './../interfaces/spotify-simplified-artist-api-response.interface';
 import { SpotifyEntityType } from './../types/spotify-entity-type.type';
 import { SpotifyExternalURLs } from './../types/spotify-external-urls.type';
-import { SpotifySimplifiedArtistAPIResponse } from './../interfaces/spotify-simplified-artist-api-response.interface';
 
 /**
  * SpotifySimplifiedArtist
@@ -12,15 +12,32 @@ export class SpotifySimplifiedArtist {
   /**
    * Creates an instance of SpotifySimplifiedArtist.
    *
-   * @param {SpotifySimplifiedArtistAPIResponse} artist
+   * @param {SpotifySimplifiedArtist} artist
    * @memberof SpotifySimplifiedArtist
    */
-  constructor(artist: SpotifySimplifiedArtistAPIResponse) {
-    this.id = artist.id;
-    this.externalUrls = artist.external_urls;
-    this.href = artist.href;
-    this.name = artist.name;
-    this.uri = artist.uri;
+  constructor(artist: SpotifySimplifiedArtist) {
+    Object.keys(artist).forEach(key => {
+      this[key] = artist[key];
+    });
+  }
+
+  /**
+   * Load SpotifySimplifiedArtist from JSON
+   *
+   * @static
+   * @param {SpotifySimplifiedArtistAPIResponse} artist
+   * @returns
+   * @memberof SpotifySimplifiedArtist
+   */
+  static fromJSON(artist: SpotifySimplifiedArtistAPIResponse) {
+    return new this({
+      id: artist.id,
+      externalUrls: artist.external_urls,
+      href: artist.href,
+      name: artist.name,
+      type: artist.type,
+      uri: artist.uri
+    });
   }
 
   /**

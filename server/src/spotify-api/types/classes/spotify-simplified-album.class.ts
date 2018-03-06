@@ -1,6 +1,6 @@
-import { SpotifyEntityType } from './../types/spotify-entity-type.type';
 import { SpotifyAlbumType } from '../types/spotify-album-type.type';
 import { SpotifySimplifiedAlbumAPIResponse } from './../interfaces/spotify-simplified-album-api-response.interface';
+import { SpotifyEntityType } from './../types/spotify-entity-type.type';
 import { SpotifyExternalURLs } from './../types/spotify-external-urls.type';
 import { SpotifyReleaseDatePrecision } from './../types/spotify-release-date-precision.type';
 import { SpotifyImage } from './spotify-image.class';
@@ -16,25 +16,40 @@ export class SpotifySimplifiedAlbum {
   /**
    * Creates an instance of SpotifySimplifiedAlbum.
    *
-   * @param {SpotifySimplifiedAlbumAPIResponse} album
+   * @param {SpotifySimplifiedAlbum} album
    * @memberof SpotifySimplifiedAlbum
    */
-  constructor(album: SpotifySimplifiedAlbumAPIResponse) {
-    this.id = album.id;
+  constructor(album: SpotifySimplifiedAlbum) {
+    Object.keys(album).forEach(key => {
+      this[key] = album[key];
+    });
+  }
 
-    this.albumType = album.album_type;
-    this.artists = album.artists.map(
-      artist => new SpotifySimplifiedArtist(artist)
-    );
-    this.availableMarkets = album.available_markets;
-    this.externalURLs = album.external_urls;
-    this.href = album.href;
-    this.images = album.images.map(image => new SpotifyImage(image));
-    this.name = album.name;
-    this.releaseDate = album.release_date;
-    this.releaseDatePrecision = album.release_date_precision;
-    this.type = album.type;
-    this.uri = album.uri;
+  /**
+   * Load SpotifySimplifiedAlbum from JSON
+   *
+   * @static
+   * @param {SpotifySimplifiedAlbumAPIResponse} album
+   * @returns
+   * @memberof SpotifySimplifiedAlbum
+   */
+  static fromJSON(album: SpotifySimplifiedAlbumAPIResponse) {
+    return new this({
+      id: album.id,
+      albumType: album.album_type,
+      artists: album.artists.map(artist =>
+        SpotifySimplifiedArtist.fromJSON(artist)
+      ),
+      availableMarkets: album.available_markets,
+      externalURLs: album.external_urls,
+      href: album.href,
+      images: album.images.map(image => SpotifyImage.fromJSON(image)),
+      name: album.name,
+      releaseDate: album.release_date,
+      releaseDatePrecision: album.release_date_precision,
+      type: album.type,
+      uri: album.uri
+    });
   }
 
   /**

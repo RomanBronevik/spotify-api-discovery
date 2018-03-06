@@ -1,9 +1,11 @@
+import { SpotifySimplifiedAlbum } from './../../types/classes/spotify-simplified-album.class';
 import { SpotifyEntityType } from './../../types/types/spotify-entity-type.type';
 import { SpotifyRestrictions } from './../../types/types/spotify-restrictions.type';
 import { SpotifyLinkedTrack } from './../../types/classes/spotify-linked-track.class';
 import { SpotifyExternalURLs } from './../../types/types/spotify-external-urls.type';
 import { SpotifySimplifiedArtist } from '../../types/classes/spotify-simplified-artist.class';
 import { SpotifyExternalIDs } from '../../types/types/spotify-external-ids.type';
+import { SpotifyTrackAPIResponse } from '../interfaces/spotify-track-api-response.interface';
 
 /**
  * SpotifyTrack
@@ -15,33 +17,48 @@ export class SpotifyTrack {
   /**
    * Creates an instance of SpotifyTrack.
    *
-   * @param {SpotifyTrackAPIResponse} track
+   * @param {SpotifyTrack} track
    * @memberof SpotifyTrack
    */
-  constructor(track: SpotifyTrackAPIResponse) {
-    this.id = track.id;
+  constructor(track: SpotifyTrack) {
+    Object.keys(track).forEach(key => {
+      this[key] = track[key];
+    });
+  }
 
-    this.album = new SpotifySimplifiedAlbum(track.album);
-    this.artists = track.artists.map(
-      artist => new SpotifySimplifiedArtist(artist)
-    );
-    this.availableMarkets = track.available_markets;
-    this.discNumber = track.disc_number;
-    this.durationMs = track.duration_ms;
-    this.explicit = track.explicit;
-    this.externalIDs = track.external_ids;
-    this.externalURLs = track.external_urls;
-    this.href = track.href;
-    this.id = track.id;
-    this.isPlayable = track.is_playable;
-    this.linkedFrom = new SpotifyLinkedTrack(track.linked_from);
-    this.name = track.name;
-    this.popularity = track.popularity;
-    this.previewURL = track.preview_url;
-    this.restrictions = track.restrictions;
-    this.trackNumber = track.track_number;
-    this.type = track.type;
-    this.uri = track.uri;
+  /**
+   * Load SpotifyTrack from JSON
+   *
+   * @static
+   * @param {SpotifyTrackAPIResponse} track
+   * @returns
+   * @memberof SpotifyTrack
+   */
+  static fromJSON(track: SpotifyTrackAPIResponse) {
+    return new this({
+      id: track.id,
+
+      album: SpotifySimplifiedAlbum.fromJSON(track.album),
+      artists: track.artists.map(artist =>
+        SpotifySimplifiedArtist.fromJSON(artist)
+      ),
+      availableMarkets: track.available_markets,
+      discNumber: track.disc_number,
+      durationMs: track.duration_ms,
+      explicit: track.explicit,
+      externalIDs: track.external_ids,
+      externalURLs: track.external_urls,
+      href: track.href,
+      isPlayable: track.is_playable,
+      linkedFrom: SpotifyLinkedTrack.fromJSON(track.linked_from),
+      name: track.name,
+      popularity: track.popularity,
+      previewURL: track.preview_url,
+      restrictions: track.restrictions,
+      trackNumber: track.track_number,
+      type: track.type,
+      uri: track.uri
+    });
   }
 
   /**

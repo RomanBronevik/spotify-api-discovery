@@ -1,13 +1,10 @@
-import { SpotifyTrackAPIResponse } from './../tracks/interfaces/spotify-track-api-response.interface';
-import { Controller, Get, Req, Param, Query, Headers } from '@nestjs/common';
-import { Request } from 'express';
+import { Controller, Get, Param, Query } from '@nestjs/common';
 
-import { AccessToken } from './../../authentication/access-token.decorator';
-import { SpotifyAlbum } from './classes/spotify-album.class';
-import { SpotifyTrack } from './../tracks/classes/spotify-track.class';
-
-import { AlbumsService } from './albums.service';
 import { SpotifyPaging } from '../types/classes/spotify-paging.class';
+import { AccessToken } from './../../authentication/access-token.decorator';
+import { SpotifyTrack } from './../tracks/classes/spotify-track.class';
+import { AlbumsService } from './albums.service';
+import { SpotifyAlbum } from './classes/spotify-album.class';
 
 /**
  * Spotify API wrapper albums controller
@@ -45,7 +42,7 @@ export class AlbumsController {
    * @param {string} market
    * @param {number} [limit]
    * @param {number} [offset]
-   * @returns {Promise<SpotifyTrack[]>}
+   * @returns {Promise<SpotifyPaging<SpotifyTrack>>}
    * @memberof AlbumsController
    */
   @Get(':id/tracks')
@@ -55,7 +52,7 @@ export class AlbumsController {
     @Query('market') market: string,
     @Query('limit') limit?: number,
     @Query('offset') offset?: number
-  ): Promise<SpotifyPaging<SpotifyTrack, SpotifyTrackAPIResponse>> {
+  ): Promise<SpotifyPaging<SpotifyTrack>> {
     return await this.albumsService.getAlbumTracks(
       accessToken,
       id,

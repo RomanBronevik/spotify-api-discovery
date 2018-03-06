@@ -7,15 +7,15 @@ import { SpotifyPagingAPIResponse } from './../interfaces/spotify-paging-api-res
  * @class SpotifyPaging
  * @template T
  */
-export class SpotifyPaging<T, U> {
+export class SpotifyPaging<T> {
   /**
    * Creates an instance of SpotifyPaging.
    *
-   * @param {SpotifyPagingAPIResponse<U>} paging
+   * @param {SpotifyPaging<U>} paging
    * @param {class} ItemsClass
    * @memberof SpotifyPaging
    */
-  constructor(paging: SpotifyPagingAPIResponse<U>, items) {
+  constructor(paging: SpotifyPaging<T>, items) {
     this.href = paging.href;
     this.items = items;
     this.limit = paging.limit;
@@ -23,6 +23,32 @@ export class SpotifyPaging<T, U> {
     this.offset = paging.offset;
     this.previous = paging.previous;
     this.total = paging.total;
+  }
+
+  /**
+   * Load SpotifyPaging from JSON
+   *
+   * @static
+   * @template U
+   * @template V
+   * @param {SpotifyPagingAPIResponse<V>} paging
+   * @param {any} items
+   * @returns
+   * @memberof SpotifyPaging
+   */
+  static fromJSON<U, V>(paging: SpotifyPagingAPIResponse<V>, items) {
+    return new this<U>(
+      {
+        href: paging.href,
+        items: items,
+        limit: paging.limit,
+        next: paging.next,
+        offset: paging.offset,
+        previous: paging.previous,
+        total: paging.total
+      },
+      items
+    );
   }
 
   /**

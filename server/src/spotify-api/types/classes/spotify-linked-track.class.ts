@@ -1,3 +1,4 @@
+import { SpotifyLinkedTrackAPIResponse } from './../interfaces/spotify-linked-track-api-response.interface';
 import { SpotifyExternalURLs } from './../types/spotify-external-urls.type';
 import { SpotifyEntityType } from '../types/spotify-entity-type.type';
 
@@ -11,15 +12,31 @@ export class SpotifyLinkedTrack {
   /**
    * Creates an instance of SpotifyLinkedTrack.
    *
-   * @param {SpotifyLinkedTrackAPIResponse} linkedTrack
+   * @param {SpotifyLinkedTrack} linkedTrack
    * @memberof SpotifyLinkedTrack
    */
-  constructor(linkedTrack: SpotifyLinkedTrackAPIResponse) {
-    this.id = linkedTrack.id;
-    this.externalURLs = linkedTrack.external_urls;
-    this.href = linkedTrack.href;
-    this.type = linkedTrack.type;
-    this.uri = linkedTrack.uri;
+  constructor(linkedTrack: SpotifyLinkedTrack) {
+    Object.keys(linkedTrack).forEach(key => {
+      this[key] = linkedTrack[key];
+    });
+  }
+
+  /**
+   * Load SpotifyLinkedTrack from JSON
+   *
+   * @static
+   * @param {SpotifyLinkedTrackAPIResponse} linkedTrack
+   * @returns
+   * @memberof SpotifyLinkedTrack
+   */
+  static fromJSON(linkedTrack: SpotifyLinkedTrackAPIResponse) {
+    return new this({
+      id: linkedTrack.id,
+      externalURLs: linkedTrack.external_urls,
+      href: linkedTrack.href,
+      type: linkedTrack.type,
+      uri: linkedTrack.uri
+    });
   }
 
   /**

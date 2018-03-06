@@ -3,4 +3,5 @@ export type SpotifyEntityType =
   | 'album'
   | 'track'
   | 'audio_features'
-  | 'user';
+  | 'user'
+  | 'playlist';

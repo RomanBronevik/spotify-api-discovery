@@ -6,10 +6,26 @@ import { SpotifyImageAPIResponse } from './../interfaces/spotify-image-api-respo
  * @class SpotifyImage
  */
 export class SpotifyImage {
-  constructor(image: SpotifyImageAPIResponse) {
-    this.height = image.height;
-    this.url = image.url;
-    this.width = image.width;
+  constructor(image: SpotifyImage) {
+    Object.keys(image).forEach(key => {
+      this[key] = image[key];
+    });
+  }
+
+  /**
+   * Load SpotifyImage from JSON
+   *
+   * @static
+   * @param {SpotifyImageAPIResponse} image
+   * @returns
+   * @memberof SpotifyImage
+   */
+  static fromJSON(image: SpotifyImageAPIResponse) {
+    return new this({
+      height: image.height,
+      url: image.url,
+      width: image.width
+    });
   }
 
   /**

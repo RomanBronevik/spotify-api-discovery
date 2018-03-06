@@ -11,12 +11,28 @@ export class SpotifyCopyright {
   /**
    * Creates an instance of Copyright.
    *
-   * @param {SpotifyCopyrightAPIResponse} copyright
+   * @param {SpotifyCopyright} copyright
    * @memberof SpotifyCopyright
    */
-  constructor(copyright: SpotifyCopyrightAPIResponse) {
-    this.text = copyright.text;
-    this.type = copyright.type;
+  constructor(copyright: SpotifyCopyright) {
+    Object.keys(copyright).forEach(key => {
+      this[key] = copyright[key];
+    });
+  }
+
+  /**
+   * Load SpotifyCopyright from JSON
+   *
+   * @static
+   * @param {SpotifyCopyrightAPIResponse} copyright
+   * @returns
+   * @memberof SpotifyCopyright
+   */
+  static fromJSON(copyright: SpotifyCopyrightAPIResponse) {
+    return new this({
+      text: copyright.text,
+      type: copyright.type
+    });
   }
 
   /**

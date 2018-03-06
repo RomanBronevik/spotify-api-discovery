@@ -1,10 +1,11 @@
 import {
   SpotifyAudioAnalysisAPIResponse,
-  SpotifyAudioAnalysisSectionsAPIResponse,
-  SpotifyAudioAnalysisMetaAPIResponse,
-  SpotifyAudioAnalysisBeatsAPIResponse,
   SpotifyAudioAnalysisBarsAPIResponse,
+  SpotifyAudioAnalysisBeatsAPIResponse,
+  SpotifyAudioAnalysisMetaAPIResponse,
+  SpotifyAudioAnalysisSectionsAPIResponse,
   SpotifyAudioAnalysisSegmentsAPIResponse,
+  SpotifyAudioAnalysisTatumAPIResponse,
   SpotifyAudioAnalysisTrackAPIResponse
 } from './../interfaces/spotify-audio-analysis-api-response.interface';
 
@@ -23,19 +24,35 @@ export class SpotifyAudioAnalysis {
   /**
    * Creates an instance of SpotifyAudioAnalysis.
    *
-   * @param {SpotifyAudioAnalysisAPIResponse} audioAnalysis
+   * @param {SpotifyAudioAnalysis} audioAnalysis
    * @memberof SpotifyAudioAnalysis
    */
-  constructor(audioAnalysis: SpotifyAudioAnalysisAPIResponse) {
-    this.bars = new SpotifyAudioAnalysisBars(audioAnalysis.bars);
-    this.beats = new SpotifyAudioAnalysisBeats(audioAnalysis.beats);
-    this.meta = new SpotifyAudioAnalysisMeta(audioAnalysis.meta);
-    this.sections = new SpotifyAudioAnalysisSections(audioAnalysis.sections);
-    this.segments = new SpotifyAudioAnalysisSegments(audioAnalysis.segments);
-    this.tatums = audioAnalysis.tatums.map(
-      tatum => new SpotifyAudioAnalysisTatum(tatum)
-    );
-    this.track = new SpotifyAudioAnalysisTrack(audioAnalysis.track);
+  constructor(audioAnalysis: SpotifyAudioAnalysis) {
+    Object.keys(audioAnalysis).forEach(key => {
+      this[key] = audioAnalysis[key];
+    });
+  }
+
+  /**
+   * Load SpotifyAudioAnalysis from JSON
+   *
+   * @static
+   * @param {SpotifyAudioAnalysisAPIResponse} audioAnalysis
+   * @returns
+   * @memberof SpotifyAudioAnalysis
+   */
+  static fromJSON(audioAnalysis: SpotifyAudioAnalysisAPIResponse) {
+    return new this({
+      bars: SpotifyAudioAnalysisBars.fromJSON(audioAnalysis.bars),
+      beats: SpotifyAudioAnalysisBeats.fromJSON(audioAnalysis.beats),
+      meta: SpotifyAudioAnalysisMeta.fromJSON(audioAnalysis.meta),
+      sections: SpotifyAudioAnalysisSections.fromJSON(audioAnalysis.sections),
+      segments: SpotifyAudioAnalysisSegments.fromJSON(audioAnalysis.segments),
+      tatums: audioAnalysis.tatums.map(tatum =>
+        SpotifyAudioAnalysisTatum.fromJSON(tatum)
+      ),
+      track: SpotifyAudioAnalysisTrack.fromJSON(audioAnalysis.track)
+    });
   }
 
   /**
@@ -109,9 +126,25 @@ export class SpotifyAudioAnalysisBars {
    * @memberof SpotifyAudioAnalysisBars
    */
   constructor(audioAnalysisBars: SpotifyAudioAnalysisBarsAPIResponse) {
-    this.start = audioAnalysisBars.start;
-    this.duration = audioAnalysisBars.duration;
-    this.confidence = audioAnalysisBars.confidence;
+    Object.keys(audioAnalysisBars).forEach(key => {
+      this[key] = audioAnalysisBars[key];
+    });
+  }
+
+  /**
+   * Load SpotifyAudioAnalysisBars from JSON
+   *
+   * @static
+   * @param {SpotifyAudioAnalysisBarsAPIResponse} audioAnalysisBars
+   * @returns
+   * @memberof SpotifyAudioAnalysisBars
+   */
+  static fromJSON(audioAnalysisBars: SpotifyAudioAnalysisBarsAPIResponse) {
+    return new this({
+      start: audioAnalysisBars.start,
+      duration: audioAnalysisBars.duration,
+      confidence: audioAnalysisBars.confidence
+    });
   }
 
   /**
@@ -149,13 +182,29 @@ export class SpotifyAudioAnalysisBeats {
   /**
    * Creates an instance of SpotifyAudioAnalysisBeats.
    *
-   * @param {SpotifyAudioAnalysisBeatsAPIResponse} audioAnalysisBeats
+   * @param {SpotifyAudioAnalysisBeats} audioAnalysisBeats
    * @memberof SpotifyAudioAnalysisBeats
    */
-  constructor(audioAnalysisBeats: SpotifyAudioAnalysisBeatsAPIResponse) {
-    this.start = audioAnalysisBeats.start;
-    this.duration = audioAnalysisBeats.duration;
-    this.confidence = audioAnalysisBeats.confidence;
+  constructor(audioAnalysisBeats: SpotifyAudioAnalysisBeats) {
+    Object.keys(audioAnalysisBeats).forEach(key => {
+      this[key] = audioAnalysisBeats[key];
+    });
+  }
+
+  /**
+   * Load SpotifyAudioAnalysisBeats from JSON
+   *
+   * @static
+   * @param {SpotifyAudioAnalysisBeatsAPIResponse} audioAnalysisBeats
+   * @returns
+   * @memberof SpotifyAudioAnalysisBeats
+   */
+  static fromJSON(audioAnalysisBeats: SpotifyAudioAnalysisBeatsAPIResponse) {
+    return new this({
+      start: audioAnalysisBeats.start,
+      duration: audioAnalysisBeats.duration,
+      confidence: audioAnalysisBeats.confidence
+    });
   }
 
   /**
@@ -193,17 +242,33 @@ export class SpotifyAudioAnalysisMeta {
   /**
    * Creates an instance of SpotifyAudioAnalysisMeta.
    *
-   * @param {SpotifyAudioAnalysisMetaAPIResponse} audioAnalysisMeta
+   * @param {SpotifyAudioAnalysisMeta} audioAnalysisMeta
    * @memberof SpotifyAudioAnalysisMeta
    */
-  constructor(audioAnalysisMeta: SpotifyAudioAnalysisMetaAPIResponse) {
-    this.analyzerVersion = audioAnalysisMeta.analyzer_version;
-    this.platform = audioAnalysisMeta.platform;
-    this.detailedStatus = audioAnalysisMeta.detailed_status;
-    this.statusCode = audioAnalysisMeta.status_code;
-    this.timestamp = audioAnalysisMeta.timestamp;
-    this.analysisTime = audioAnalysisMeta.analysis_time;
-    this.inputProcess = audioAnalysisMeta.input_process;
+  constructor(audioAnalysisMeta: SpotifyAudioAnalysisMeta) {
+    Object.keys(audioAnalysisMeta).forEach(key => {
+      this[key] = audioAnalysisMeta[key];
+    });
+  }
+
+  /**
+   * Load SpotifyAudioAnalysisMeta from JSON
+   *
+   * @static
+   * @param {SpotifyAudioAnalysisMetaAPIResponse} audioAnalysisMeta
+   * @returns
+   * @memberof SpotifyAudioAnalysisMeta
+   */
+  static fromJSON(audioAnalysisMeta: SpotifyAudioAnalysisMetaAPIResponse) {
+    return new this({
+      analyzerVersion: audioAnalysisMeta.analyzer_version,
+      platform: audioAnalysisMeta.platform,
+      detailedStatus: audioAnalysisMeta.detailed_status,
+      statusCode: audioAnalysisMeta.status_code,
+      timestamp: audioAnalysisMeta.timestamp,
+      analysisTime: audioAnalysisMeta.analysis_time,
+      inputProcess: audioAnalysisMeta.input_process
+    });
   }
 
   /**
@@ -273,23 +338,40 @@ export class SpotifyAudioAnalysisSections {
   /**
    * Creates an instance of SpotifyAudioAnalysisSections.
    *
-   * @param {SpotifyAudioAnalysisSectionsAPIResponse} audioAnalysisSections
+   * @param {SpotifyAudioAnalysisSections} audioAnalysisSections
    * @memberof SpotifyAudioAnalysisSections
    */
-  constructor(audioAnalysisSections: SpotifyAudioAnalysisSectionsAPIResponse) {
-    this.start = audioAnalysisSections.start;
-    this.duration = audioAnalysisSections.duration;
-    this.confidence = audioAnalysisSections.confidence;
-    this.loudness = audioAnalysisSections.loudness;
-    this.tempo = audioAnalysisSections.tempo;
-    this.tempoConfidence = audioAnalysisSections.tempo_confidence;
-    this.key = audioAnalysisSections.key;
-    this.keyConfidence = audioAnalysisSections.key_confidence;
-    this.mode = audioAnalysisSections.mode;
-    this.modeConfidence = audioAnalysisSections.mode_confidence;
-    this.timeSignature = audioAnalysisSections.time_signature;
-    this.timeSignatureConfidence =
-      audioAnalysisSections.time_signature_confidence;
+  constructor(audioAnalysisSections: SpotifyAudioAnalysisSections) {
+    Object.keys(audioAnalysisSections).forEach(key => {
+      this[key] = audioAnalysisSections[key];
+    });
+  }
+
+  /**
+   * Load SpotifyAudioAnalysisSections from JSON
+   *
+   * @static
+   * @param {SpotifyAudioAnalysisSectionsAPIResponse} audioAnalysisSections
+   * @returns
+   * @memberof SpotifyAudioAnalysisSections
+   */
+  static fromJSON(
+    audioAnalysisSections: SpotifyAudioAnalysisSectionsAPIResponse
+  ) {
+    return new this({
+      start: audioAnalysisSections.start,
+      duration: audioAnalysisSections.duration,
+      confidence: audioAnalysisSections.confidence,
+      loudness: audioAnalysisSections.loudness,
+      tempo: audioAnalysisSections.tempo,
+      tempoConfidence: audioAnalysisSections.tempo_confidence,
+      key: audioAnalysisSections.key,
+      keyConfidence: audioAnalysisSections.key_confidence,
+      mode: audioAnalysisSections.mode,
+      modeConfidence: audioAnalysisSections.mode_confidence,
+      timeSignature: audioAnalysisSections.time_signature,
+      timeSignatureConfidence: audioAnalysisSections.time_signature_confidence
+    });
   }
 
   /**
@@ -399,18 +481,37 @@ export class SpotifyAudioAnalysisSegments {
   /**
    * Creates an instance of SpotifyAudioAnalysisSegments.
    *
-   * @param {SpotifyAudioAnalysisSegmentsAPIResponse} audioAnalysisSegments
+   * @param {SpotifyAudioAnalysisSegments} audioAnalysisSegments
    * @memberof SpotifyAudioAnalysisSegments
    */
-  constructor(audioAnalysisSegments: SpotifyAudioAnalysisSegmentsAPIResponse) {
-    this.start = audioAnalysisSegments.start;
-    this.duration = audioAnalysisSegments.duration;
-    this.confidence = audioAnalysisSegments.confidence;
-    this.loudnessStart = audioAnalysisSegments.loudness_start;
-    this.loudnessMaxTime = audioAnalysisSegments.loudness_max_time;
-    this.loudnessEnd = audioAnalysisSegments.loudness_end;
-    this.pitches = audioAnalysisSegments.pitches;
-    this.timbre = audioAnalysisSegments.timbre;
+  constructor(audioAnalysisSegments: SpotifyAudioAnalysisSegments) {
+    Object.keys(audioAnalysisSegments).forEach(key => {
+      this[key] = audioAnalysisSegments[key];
+    });
+  }
+
+  /**
+   * Load SpotifyAudioAnalysisSegments from JSON
+   *
+   * @static
+   * @param {SpotifyAudioAnalysisSegmentsAPIResponse} audioAnalysisSegments
+   * @returns
+   * @memberof SpotifyAudioAnalysisSegments
+   */
+  static fromJSON(
+    audioAnalysisSegments: SpotifyAudioAnalysisSegmentsAPIResponse
+  ) {
+    return new this({
+      start: audioAnalysisSegments.start,
+      duration: audioAnalysisSegments.duration,
+      confidence: audioAnalysisSegments.confidence,
+      loudnessStart: audioAnalysisSegments.loudness_start,
+      loudnessMaxTime: audioAnalysisSegments.loudness_max_time,
+      loudnessMax: audioAnalysisSegments.loudness_max,
+      loudnessEnd: audioAnalysisSegments.loudness_end,
+      pitches: audioAnalysisSegments.pitches,
+      timbre: audioAnalysisSegments.timbre
+    });
   }
 
   /**
@@ -496,13 +597,29 @@ export class SpotifyAudioAnalysisTatum {
   /**
    * Creates an instance of SpotifyAudioAnalysisTatum.
    *
-   * @param {any} audioAnalysisTatum
+   * @param {SpotifyAudioAnalysisTatum} audioAnalysisTatum
    * @memberof SpotifyAudioAnalysisTatum
    */
-  constructor(audioAnalysisTatum) {
-    this.start = audioAnalysisTatum.start;
-    this.duration = audioAnalysisTatum.duration;
-    this.confidence = audioAnalysisTatum.confidence;
+  constructor(audioAnalysisTatum: SpotifyAudioAnalysisTatum) {
+    Object.keys(audioAnalysisTatum).forEach(key => {
+      this[key] = audioAnalysisTatum[key];
+    });
+  }
+
+  /**
+   * Load SpotifyAudioAnalysisTatum from JSON
+   *
+   * @static
+   * @param {SpotifyAudioAnalysisTatumAPIResponse} audioAnalysisTatum
+   * @returns
+   * @memberof SpotifyAudioAnalysisTatum
+   */
+  static fromJSON(audioAnalysisTatum: SpotifyAudioAnalysisTatumAPIResponse) {
+    return new this({
+      start: audioAnalysisTatum.start,
+      duration: audioAnalysisTatum.duration,
+      confidence: audioAnalysisTatum.confidence
+    });
   }
 
   /**
@@ -540,35 +657,52 @@ export class SpotifyAudioAnalysisTrack {
   /**
    * Creates an instance of SpotifyAudioAnalysisTrack.
    *
-   * @param {SpotifyAudioAnalysisTrackAPIResponse} audioAnalysisTrack
+   * @param {SpotifyAudioAnalysisTrack} audioAnalysisTrack
    * @memberof SpotifyAudioAnalysisTrack
    */
-  constructor(audioAnalysisTrack: SpotifyAudioAnalysisTrackAPIResponse) {
-    this.numSamples = audioAnalysisTrack.num_samples;
-    this.duration = audioAnalysisTrack.duration;
-    this.sampleMD5 = audioAnalysisTrack.sample_md5;
-    this.offsetSeconds = audioAnalysisTrack.offset_seconds;
-    this.windowSeconds = audioAnalysisTrack.window_seconds;
-    this.analysisSampleRate = audioAnalysisTrack.analysis_sample_rate;
-    this.analysisChannels = audioAnalysisTrack.analysis_channels;
-    this.endOfFadeIn = audioAnalysisTrack.end_of_fade_in;
-    this.startOfFadeOut = audioAnalysisTrack.start_of_fade_out;
-    this.loudness = audioAnalysisTrack.loudness;
-    this.tempo = audioAnalysisTrack.tempo;
-    this.tempoConfidence = audioAnalysisTrack.tempo_confidence;
-    this.timeSignature = audioAnalysisTrack.time_signature;
-    this.key = audioAnalysisTrack.key;
-    this.keyConfidence = audioAnalysisTrack.key_confidence;
-    this.mode = audioAnalysisTrack.mode;
-    this.modeConfidence = audioAnalysisTrack.mode_confidence;
-    this.codestring = audioAnalysisTrack.codestring;
-    this.codeVersion = audioAnalysisTrack.code_version;
-    this.echoprintstring = audioAnalysisTrack.echoprintstring;
-    this.echoprintVersion = audioAnalysisTrack.echoprint_version;
-    this.synchstring = audioAnalysisTrack.synchstring;
-    this.synchVersion = audioAnalysisTrack.synch_version;
-    this.rythmstring = audioAnalysisTrack.rythmstring;
-    this.rythmVersion = audioAnalysisTrack.rythm_version;
+  constructor(audioAnalysisTrack: SpotifyAudioAnalysisTrack) {
+    Object.keys(audioAnalysisTrack).forEach(key => {
+      this[key] = audioAnalysisTrack[key];
+    });
+  }
+
+  /**
+   * Load SpotifyAudioAnalysisTrack from JSON
+   *
+   * @static
+   * @param {SpotifyAudioAnalysisTrackAPIResponse} audioAnalysisTrack
+   * @returns
+   * @memberof SpotifyAudioAnalysisTrack
+   */
+  static fromJSON(audioAnalysisTrack: SpotifyAudioAnalysisTrackAPIResponse) {
+    return new this({
+      numSamples: audioAnalysisTrack.num_samples,
+      duration: audioAnalysisTrack.duration,
+      sampleMD5: audioAnalysisTrack.sample_md5,
+      offsetSeconds: audioAnalysisTrack.offset_seconds,
+      windowSeconds: audioAnalysisTrack.window_seconds,
+      analysisSampleRate: audioAnalysisTrack.analysis_sample_rate,
+      analysisChannels: audioAnalysisTrack.analysis_channels,
+      endOfFadeIn: audioAnalysisTrack.end_of_fade_in,
+      startOfFadeOut: audioAnalysisTrack.start_of_fade_out,
+      loudness: audioAnalysisTrack.loudness,
+      tempo: audioAnalysisTrack.tempo,
+      tempoConfidence: audioAnalysisTrack.tempo_confidence,
+      timeSignature: audioAnalysisTrack.time_signature,
+      timeSignatureConfidence: audioAnalysisTrack.time_signature_confidence,
+      key: audioAnalysisTrack.key,
+      keyConfidence: audioAnalysisTrack.key_confidence,
+      mode: audioAnalysisTrack.mode,
+      modeConfidence: audioAnalysisTrack.mode_confidence,
+      codestring: audioAnalysisTrack.codestring,
+      codeVersion: audioAnalysisTrack.code_version,
+      echoprintstring: audioAnalysisTrack.echoprintstring,
+      echoprintVersion: audioAnalysisTrack.echoprint_version,
+      synchstring: audioAnalysisTrack.synchstring,
+      synchVersion: audioAnalysisTrack.synch_version,
+      rythmstring: audioAnalysisTrack.rythmstring,
+      rythmVersion: audioAnalysisTrack.rythm_version
+    });
   }
 
   /**

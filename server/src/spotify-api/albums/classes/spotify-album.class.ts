@@ -18,37 +18,58 @@ import { SpotifyAlbumAPIResponse } from './../interfaces/spotify-album-api-respo
  * @class Album
  */
 export class SpotifyAlbum {
-  constructor(album: SpotifyAlbumAPIResponse) {
-    this.id = album.id;
+  /**
+   * Creates an instance of SpotifyAlbum.
+   *
+   * @param {SpotifyAlbum} album
+   * @memberof SpotifyAlbum
+   */
+  constructor(album: SpotifyAlbum) {
+    Object.keys(album).forEach(key => {
+      this[key] = album[key];
+    });
+  }
 
-    this.albumType = album.album_type;
-    this.artists = album.artists.map(
-      artist => new SpotifySimplifiedArtist(artist)
-    );
-    this.availableMarkets = album.available_markets;
-    this.copyrights = album.copyrights.map(
-      copyright => new SpotifyCopyright(copyright)
-    );
-    this.externalIds = album.external_ids;
-    this.externalUrls = album.external_urls;
-    this.genres = album.genres;
-    this.href = album.href;
-    this.label = album.href;
-    this.images = album.images.map(image => new SpotifyImage(image));
-    this.label = album.label;
-    this.name = album.name;
-    this.popularity = album.popularity;
-    this.releaseDate = album.release_date;
-    this.releaseDatePrecision = album.release_date_precision;
-    this.tracks = new SpotifyPaging<
-      SpotifySimplifiedTrack,
-      SpotifySimplifiedTrackAPIResponse
-    >(
-      album.tracks,
-      album.tracks.items.map(item => new SpotifySimplifiedTrack(item))
-    );
-    this.type = album.type;
-    this.uri = album.uri;
+  /**
+   * Load SpotifyAlbum from JSON
+   *
+   * @static
+   * @param {SpotifyAlbumAPIResponse} album
+   * @returns
+   * @memberof SpotifyAlbum
+   */
+  static fromJSON(album: SpotifyAlbumAPIResponse) {
+    return new this({
+      id: album.id,
+
+      albumType: album.album_type,
+      artists: album.artists.map(artist =>
+        SpotifySimplifiedArtist.fromJSON(artist)
+      ),
+      availableMarkets: album.available_markets,
+      copyrights: album.copyrights.map(copyright =>
+        SpotifyCopyright.fromJSON(copyright)
+      ),
+      externalIds: album.external_ids,
+      externalUrls: album.external_urls,
+      genres: album.genres,
+      href: album.href,
+      images: album.images.map(image => SpotifyImage.fromJSON(image)),
+      label: album.label,
+      name: album.name,
+      popularity: album.popularity,
+      releaseDate: album.release_date,
+      releaseDatePrecision: album.release_date_precision,
+      tracks: SpotifyPaging.fromJSON<
+        SpotifySimplifiedTrack,
+        SpotifySimplifiedTrackAPIResponse
+      >(
+        album.tracks,
+        album.tracks.items.map(item => SpotifySimplifiedTrack.fromJSON(item))
+      ),
+      type: album.type,
+      uri: album.uri
+    });
   }
 
   /**
@@ -186,10 +207,7 @@ export class SpotifyAlbum {
    * @type {SpotifyPaging<SpotifySimplifiedTrack>}
    * @memberof SpotifyAlbum
    */
-  readonly tracks: SpotifyPaging<
-    SpotifySimplifiedTrack,
-    SpotifySimplifiedTrackAPIResponse
-  >;
+  readonly tracks: SpotifyPaging<SpotifySimplifiedTrack>;
 
   /**
    * The object type: “album”

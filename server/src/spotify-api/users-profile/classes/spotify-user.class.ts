@@ -1,8 +1,8 @@
-import { SpotifyUserAPIResponse } from './../interfaces/spotify-user-api-response.interface';
 import { SpotifyFollowers } from '../../types/classes/spotify-followers.class';
 import { SpotifyEntityType } from '../../types/types/spotify-entity-type.type';
 import { SpotifyImage } from './../../types/classes/spotify-image.class';
 import { SpotifyExternalURLs } from './../../types/types/spotify-external-urls.type';
+import { SpotifyUserAPIResponse } from './../interfaces/spotify-user-api-response.interface';
 
 /**
  * SpotifyUser
@@ -14,19 +14,35 @@ export class SpotifyUser {
   /**
    * Creates an instance of SpotifyUser.
    *
-   * @param {SpotifyUserAPIResponse} user
+   * @param {SpotifyUser} user
    * @memberof SpotifyUser
    */
-  constructor(user: SpotifyUserAPIResponse) {
-    this.id = user.id;
+  constructor(user: SpotifyUser) {
+    Object.keys(user).forEach(key => {
+      this[key] = user[key];
+    });
+  }
 
-    this.displayName = user.display_name;
-    this.externalURLs = user.external_urls;
-    this.followers = new SpotifyFollowers(user.followers);
-    this.href = user.href;
-    this.images = user.images.map(image => new SpotifyImage(image));
-    this.type = user.type;
-    this.uri = user.uri;
+  /**
+   * Load SpotifyUser from JSON
+   *
+   * @static
+   * @param {SpotifyUserAPIResponse} user
+   * @returns
+   * @memberof SpotifyUser
+   */
+  static fromJSON(user: SpotifyUserAPIResponse) {
+    return new this({
+      id: user.id,
+
+      displayName: user.display_name,
+      externalURLs: user.external_urls,
+      followers: new SpotifyFollowers(user.followers),
+      href: user.href,
+      images: user.images.map(image => new SpotifyImage(image)),
+      type: user.type,
+      uri: user.uri
+    });
   }
 
   /**

@@ -10,12 +10,28 @@ export class SpotifyFollowers {
   /**
    * Creates an instance of SpotifyFollowers.
    *
-   * @param {SpotifyFollowersAPIResponse} followers
+   * @param {SpotifyFollowers} followers
    * @memberof SpotifyFollowers
    */
-  constructor(followers: SpotifyFollowersAPIResponse) {
-    this.href = followers.href;
-    this.total = followers.total;
+  constructor(followers: SpotifyFollowers) {
+    Object.keys(followers).forEach(key => {
+      this[key] = followers[key];
+    });
+  }
+
+  /**
+   * Load SpotifyFollowers from JSON
+   *
+   * @static
+   * @param {SpotifyFollowersAPIResponse} followers
+   * @returns
+   * @memberof SpotifyFollowers
+   */
+  static fromJSON(followers: SpotifyFollowersAPIResponse) {
+    return new this({
+      href: followers.href,
+      total: followers.total
+    });
   }
 
   /**

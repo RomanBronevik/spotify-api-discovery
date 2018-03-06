@@ -1,8 +1,9 @@
-import { SpotifyAudioFeatures } from './classes/spotify-audio-features.class';
-import { SpotifyAudioFeaturesAPIResponse } from './interfaces/spotify-audio-features-api-response.interface';
-import { SpotifyClient } from './../../http/spotify.client';
 import { Component } from '@nestjs/common';
 import { AxiosResponse } from 'axios';
+
+import { SpotifyClient } from './../../http/spotify.client';
+import { SpotifyAudioFeatures } from './classes/spotify-audio-features.class';
+import { SpotifyAudioFeaturesAPIResponse } from './interfaces/spotify-audio-features-api-response.interface';
 
 /**
  * AudioFeaturesService
@@ -43,7 +44,7 @@ export class AudioFeaturesService {
       console.error(error);
     }
 
-    const audioFeatures = new SpotifyAudioFeatures(response.data);
+    const audioFeatures = SpotifyAudioFeatures.fromJSON(response.data);
 
     return audioFeatures;
   }
@@ -72,8 +73,8 @@ export class AudioFeaturesService {
       console.error(error);
     }
 
-    const audioFeatures = response.data.audio_features.map(
-      audioFeatures => new SpotifyAudioFeatures(audioFeatures)
+    const audioFeatures = response.data.audio_features.map(audioFeatures =>
+      SpotifyAudioFeatures.fromJSON(audioFeatures)
     );
 
     return audioFeatures;

@@ -14,21 +14,37 @@ export class SpotifyArtist {
   /**
    * Creates an instance of SpotifyArtist.
    *
-   * @param {SpotifyArtistAPIResponse} artist
+   * @param {SpotifyArtist} artist
    * @memberof SpotifyArtist
    */
-  constructor(artist: SpotifyArtistAPIResponse) {
-    this.id = artist.id;
+  constructor(artist: SpotifyArtist) {
+    Object.keys(artist).forEach(key => {
+      this[key] = artist[key];
+    });
+  }
 
-    this.externalURLs = artist.external_urls;
-    this.followers = new SpotifyFollowers(artist.followers);
-    this.genres = artist.genres;
-    this.href = artist.href;
-    this.images = artist.images.map(image => new SpotifyImage(image));
-    this.name = artist.name;
-    this.popularity = artist.popularity;
-    this.type = artist.type;
-    this.uri = artist.uri;
+  /**
+   * Load SpotifyArtist from JSON
+   *
+   * @static
+   * @param {SpotifyArtistAPIResponse} artist
+   * @returns
+   * @memberof SpotifyArtist
+   */
+  static fromJSON(artist: SpotifyArtistAPIResponse) {
+    return new this({
+      id: artist.id,
+
+      externalURLs: artist.external_urls,
+      followers: new SpotifyFollowers(artist.followers),
+      genres: artist.genres,
+      href: artist.href,
+      images: artist.images.map(image => new SpotifyImage(image)),
+      name: artist.name,
+      popularity: artist.popularity,
+      type: artist.type,
+      uri: artist.uri
+    });
   }
 
   /**

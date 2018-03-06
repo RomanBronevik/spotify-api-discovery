@@ -1,8 +1,9 @@
-import { SpotifyAudioAnalysisAPIResponse } from './interfaces/spotify-audio-analysis-api-response.interface';
-import { SpotifyAudioAnalysis } from './classes/spotify-audio-analysis.class';
-import { AxiosResponse } from 'axios';
-import { SpotifyClient } from './../../http/spotify.client';
 import { Component } from '@nestjs/common';
+import { AxiosResponse } from 'axios';
+
+import { SpotifyClient } from './../../http/spotify.client';
+import { SpotifyAudioAnalysis } from './classes/spotify-audio-analysis.class';
+import { SpotifyAudioAnalysisAPIResponse } from './interfaces/spotify-audio-analysis-api-response.interface';
 
 /**
  * AudioAnalysisService
@@ -43,7 +44,7 @@ export class AudioAnalysisService {
       console.error(error);
     }
 
-    const audioAnalysis = new SpotifyAudioAnalysis(response.data);
+    const audioAnalysis = SpotifyAudioAnalysis.fromJSON(response.data);
 
     return audioAnalysis;
   }

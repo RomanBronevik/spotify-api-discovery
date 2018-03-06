@@ -40,9 +40,9 @@ export class AlbumsService {
     albumId: string,
     market?: string
   ): Promise<SpotifyAlbum> {
-    let response: AxiosResponse<SpotifyAlbum>;
+    let response: AxiosResponse<SpotifyAlbumAPIResponse>;
     try {
-      response = await this.spotifyClient.get<SpotifyAlbum>(
+      response = await this.spotifyClient.get<SpotifyAlbumAPIResponse>(
         `/albums/${albumId}${market ? `?market=${market}` : ''}`,
         accessToken
       );
@@ -50,7 +50,9 @@ export class AlbumsService {
       console.error(error);
     }
 
-    return response.data;
+    const album = SpotifyAlbum.fromJSON(response.data);
+
+    return album;
   }
 
   /**
@@ -61,7 +63,7 @@ export class AlbumsService {
    * @param {string} [market]
    * @param {number} [limit]
    * @param {number} [offset]
-   * @returns {Promise<SpotifyTrack[]>}
+   * @returns {Promise<SpotifyPaging<SpotifyTrack>>}
    * @memberof AlbumsService
    */
   public async getAlbumTracks(
@@ -70,7 +72,7 @@ export class AlbumsService {
     market?: string,
     limit?: number,
     offset?: number
-  ): Promise<SpotifyPaging<SpotifyTrack, SpotifyTrackAPIResponse>> {
+  ): Promise<SpotifyPaging<SpotifyTrack>> {
     let response: AxiosResponse<
       SpotifyPagingAPIResponse<SpotifyTrackAPIResponse>
     >;
@@ -94,9 +96,12 @@ export class AlbumsService {
       console.error(error);
     }
 
-    const tracks = new SpotifyPaging<SpotifyTrack, SpotifyTrackAPIResponse>(
+    const tracks = SpotifyPaging.fromJSON<
+      SpotifyTrack,
+      SpotifyTrackAPIResponse
+    >(
       response.data,
-      response.data.items.map(item => new SpotifyTrack(item))
+      response.data.items.map(item => SpotifyTrack.fromJSON(item))
     );
 
     return tracks;
@@ -126,7 +131,9 @@ export class AlbumsService {
       console.error(error);
     }
 
-    const albums = response.data.albums.map(album => new SpotifyAlbum(album));
+    const albums = response.data.albums.map(album =>
+      SpotifyAlbum.fromJSON(album)
+    );
 
     return albums;
   }

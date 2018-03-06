@@ -51,7 +51,7 @@ export class ArtistsService {
       console.error(error);
     }
 
-    const artist = new SpotifyArtist(response.data);
+    const artist = SpotifyArtist.fromJSON(response.data);
 
     return artist;
   }
@@ -78,8 +78,8 @@ export class ArtistsService {
       console.error(error);
     }
 
-    const artists = response.data.artists.map(
-      artist => new SpotifyArtist(artist)
+    const artists = response.data.artists.map(artist =>
+      SpotifyArtist.fromJSON(artist)
     );
 
     return artists;
@@ -104,7 +104,7 @@ export class ArtistsService {
     market?: string,
     limit?: number,
     offset?: number
-  ): Promise<SpotifyPaging<SpotifyAlbum, SpotifyAlbumAPIResponse>> {
+  ): Promise<SpotifyPaging<SpotifyAlbum>> {
     let response: AxiosResponse<
       SpotifyPagingAPIResponse<SpotifyAlbumAPIResponse>
     >;
@@ -129,9 +129,12 @@ export class ArtistsService {
       console.error(error);
     }
 
-    const albums = new SpotifyPaging<SpotifyAlbum, SpotifyAlbumAPIResponse>(
+    const albums = SpotifyPaging.fromJSON<
+      SpotifyAlbum,
+      SpotifyAlbumAPIResponse
+    >(
       response.data,
-      response.data.items.map(item => new SpotifyAlbum(item))
+      response.data.items.map(item => SpotifyAlbum.fromJSON(item))
     );
 
     return albums;
@@ -164,8 +167,8 @@ export class ArtistsService {
       console.error(error);
     }
 
-    const topTracks = response.data.tracks.map(
-      track => new SpotifyTrack(track)
+    const topTracks = response.data.tracks.map(track =>
+      SpotifyTrack.fromJSON(track)
     );
 
     return topTracks;
@@ -193,8 +196,8 @@ export class ArtistsService {
       console.error(error);
     }
 
-    const relatedArtists = response.data.artists.map(
-      artist => new SpotifyArtist(artist)
+    const relatedArtists = response.data.artists.map(artist =>
+      SpotifyArtist.fromJSON(artist)
     );
 
     return relatedArtists;

@@ -39,7 +39,7 @@ export class UsersService {
       console.error(error);
     }
 
-    const user = new SpotifyUser(response.data);
+    const user = SpotifyUser.fromJSON(response.data);
 
     return user;
   }
@@ -64,7 +64,7 @@ export class UsersService {
       console.error(error);
     }
 
-    const user = new SpotifyUser(response.data);
+    const user = SpotifyUser.fromJSON(response.data);
 
     return user;
   }

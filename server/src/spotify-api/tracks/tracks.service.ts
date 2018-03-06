@@ -1,9 +1,9 @@
-import { SpotifyTrackAPIResponse } from './interfaces/spotify-track-api-response.interface';
-import { AxiosResponse } from 'axios';
 import { Component } from '@nestjs/common';
+import { AxiosResponse } from 'axios';
 
 import { SpotifyClient } from './../../http/spotify.client';
 import { SpotifyTrack } from './classes/spotify-track.class';
+import { SpotifyTrackAPIResponse } from './interfaces/spotify-track-api-response.interface';
 
 /**
  * TracksService
@@ -46,7 +46,7 @@ export class TracksService {
       console.error(error);
     }
 
-    const track = new SpotifyTrack(response.data);
+    const track = SpotifyTrack.fromJSON(response.data);
 
     return track;
   }
@@ -75,7 +75,9 @@ export class TracksService {
       console.error(error);
     }
 
-    const tracks = response.data.tracks.map(track => new SpotifyTrack(track));
+    const tracks = response.data.tracks.map(track =>
+      SpotifyTrack.fromJSON(track)
+    );
 
     return tracks;
   }

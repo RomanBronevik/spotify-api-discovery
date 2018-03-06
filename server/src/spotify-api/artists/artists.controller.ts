@@ -1,6 +1,5 @@
 import { Controller, Get, Param, Query } from '@nestjs/common';
 
-import { SpotifyAlbumAPIResponse } from '../albums/interfaces/spotify-album-api-response.interface';
 import { SpotifyTrack } from '../tracks/classes/spotify-track.class';
 import { SpotifyPaging } from '../types/classes/spotify-paging.class';
 import { AccessToken } from './../../authentication/access-token.decorator';
@@ -65,7 +64,7 @@ export class ArtistsController {
    * @param {string} [market]
    * @param {number} [limit]
    * @param {number} [offset]
-   * @returns {Promise<SpotifyAlbum[]>}
+   * @returns {Promise<SpotifyPaging<SpotifyAlbum>>}
    * @memberof ArtistsController
    */
   @Get(':id/albums')
@@ -76,7 +75,7 @@ export class ArtistsController {
     @Query('market') market?: string,
     @Query('limit') limit?: number,
     @Query('offset') offset?: number
-  ): Promise<SpotifyPaging<SpotifyAlbum, SpotifyAlbumAPIResponse>> {
+  ): Promise<SpotifyPaging<SpotifyAlbum>> {
     return this.artistsService.getArtistAlbums(
       accessToken,
       id,

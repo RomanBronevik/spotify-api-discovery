@@ -1,5 +1,5 @@
-import { SpotifyAudioFeaturesAPIResponse } from './../interfaces/spotify-audio-features-api-response.interface';
 import { SpotifyEntityType } from '../../types/types/spotify-entity-type.type';
+import { SpotifyAudioFeaturesAPIResponse } from './../interfaces/spotify-audio-features-api-response.interface';
 
 /**
  * SpotifyAudioFeatures
@@ -11,29 +11,44 @@ export class SpotifyAudioFeatures {
   /**
    * Creates an instance of SpotifyAudioFeatures.
    *
-   * @param {SpotifyAudioFeaturesAPIResponse} audioFeatures
+   * @param {SpotifyAudioFeatures} audioFeatures
    * @memberof SpotifyAudioFeatures
    */
-  constructor(audioFeatures: SpotifyAudioFeaturesAPIResponse) {
-    this.id = audioFeatures.id;
+  constructor(audioFeatures: SpotifyAudioFeatures) {
+    Object.keys(audioFeatures).forEach(key => {
+      this[key] = audioFeatures[key];
+    });
+  }
 
-    this.acousticness = audioFeatures.acousticness;
-    this.analysisURL = audioFeatures.analysis_url;
-    this.danceability = audioFeatures.danceability;
-    this.durationMs = audioFeatures.duration_ms;
-    this.energy = audioFeatures.energy;
-    this.instrumentalness = audioFeatures.instrumentalness;
-    this.key = audioFeatures.key;
-    this.liveness = audioFeatures.liveness;
-    this.loudness = audioFeatures.loudness;
-    this.mode = audioFeatures.mode;
-    this.speechiness = audioFeatures.speechiness;
-    this.tempo = audioFeatures.tempo;
-    this.timeSignature = audioFeatures.time_signature;
-    this.trackHref = audioFeatures.track_href;
-    this.type = audioFeatures.type;
-    this.uri = audioFeatures.uri;
-    this.valence = audioFeatures.valence;
+  /**
+   * Load SpotifyAudioFeatures from JSON
+   *
+   * @static
+   * @param {SpotifyAudioFeaturesAPIResponse} audioFeatures
+   * @returns
+   * @memberof SpotifyAudioFeatures
+   */
+  static fromJSON(audioFeatures: SpotifyAudioFeaturesAPIResponse) {
+    return new this({
+      id: audioFeatures.id,
+      acousticness: audioFeatures.acousticness,
+      analysisURL: audioFeatures.analysis_url,
+      danceability: audioFeatures.danceability,
+      durationMs: audioFeatures.duration_ms,
+      energy: audioFeatures.energy,
+      instrumentalness: audioFeatures.instrumentalness,
+      key: audioFeatures.key,
+      liveness: audioFeatures.liveness,
+      loudness: audioFeatures.loudness,
+      mode: audioFeatures.mode,
+      speechiness: audioFeatures.speechiness,
+      tempo: audioFeatures.tempo,
+      timeSignature: audioFeatures.time_signature,
+      trackHref: audioFeatures.track_href,
+      type: audioFeatures.type,
+      uri: audioFeatures.uri,
+      valence: audioFeatures.valence
+    });
   }
 
   /**
