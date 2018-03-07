@@ -7,7 +7,7 @@ import { SpotifyExternalURLs } from '../types/spotify-external-urls.type';
  * SpotifySimplifiedTrackAPIResponse
  *
  * @export
- * @class SpotifySimplifiedTrackAPIResponse
+ * @interface SpotifySimplifiedTrackAPIResponse
  */
 export interface SpotifySimplifiedTrackAPIResponse {
   /**

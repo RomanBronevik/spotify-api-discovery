@@ -7,9 +7,9 @@ import { SpotifyImageAPIResponse } from './spotify-image-api-response.interface'
  * SpotifySimplifiedPlaylistAPIResponse
  *
  * @export
- * @class SpotifySimplifiedPlaylistAPIResponse
+ * @interface SpotifySimplifiedPlaylistAPIResponse
  */
-export class SpotifySimplifiedPlaylistAPIResponse {
+export interface SpotifySimplifiedPlaylistAPIResponse {
   /**
    * TheSpotify ID for the playlist.
    *

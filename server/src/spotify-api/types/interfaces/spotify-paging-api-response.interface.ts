@@ -2,7 +2,7 @@
  * SpotifyPagingAPIResponse
  *
  * @export
- * @class SpotifyPagingAPIResponse
+ * @interface SpotifyPagingAPIResponse
  * @template T
  */
 export interface SpotifyPagingAPIResponse<T> {

@@ -1,6 +1,12 @@
 import { SpotifyExternalURLs } from './../types/spotify-external-urls.type';
 import { SpotifyEntityType } from '../types/spotify-entity-type.type';
 
+/**
+ * SpotifyLinkedTrackAPIResponse
+ *
+ * @export
+ * @interface SpotifyLinkedTrackAPIResponse
+ */
 export interface SpotifyLinkedTrackAPIResponse {
   /**
    * The Spotify ID for the track.

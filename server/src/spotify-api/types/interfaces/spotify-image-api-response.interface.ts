@@ -1,3 +1,9 @@
+/**
+ * SpotifyImageAPIResponse
+ *
+ * @export
+ * @interface SpotifyImageAPIResponse
+ */
 export interface SpotifyImageAPIResponse {
   /**
    * The image height in pixels. If unknown: null or not returned.

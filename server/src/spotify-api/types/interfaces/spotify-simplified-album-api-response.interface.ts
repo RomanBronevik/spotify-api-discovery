@@ -9,7 +9,7 @@ import { SpotifySimplifiedArtistAPIResponse } from './spotify-simplified-artist-
  * SpotifySimplifiedAlbumAPIResponse
  *
  * @export
- * @class SpotifySimplifiedAlbumAPIResponse
+ * @interface SpotifySimplifiedAlbumAPIResponse
  */
 export interface SpotifySimplifiedAlbumAPIResponse {
   /**

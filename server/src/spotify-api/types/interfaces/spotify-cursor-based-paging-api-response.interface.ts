@@ -4,10 +4,10 @@ import { SpotifyCursorAPIResponse } from './spotify-cursor-api-response.interfac
  * SpotifyCursorBasedPagingAPIResponse
  *
  * @export
- * @class SpotifyCursorBasedPagingAPIResponse
+ * @interface SpotifyCursorBasedPagingAPIResponse
  * @template T
  */
-export class SpotifyCursorBasedPagingAPIResponse<T> {
+export interface SpotifyCursorBasedPagingAPIResponse<T> {
   /**
    * A link to the Web API endpoint returning the full result of the request.
    *
