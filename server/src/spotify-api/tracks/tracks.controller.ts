@@ -53,6 +53,10 @@ export class TracksController {
     @Query('ids') ids: string,
     @Query('market') market?: string
   ): Promise<SpotifyTrack[]> {
-    return await this.tracksService.getSeveralTracks(accessToken, ids, market);
+    return await this.tracksService.getSeveralTracks(
+      accessToken,
+      ids.split(','),
+      market
+    );
   }
 }

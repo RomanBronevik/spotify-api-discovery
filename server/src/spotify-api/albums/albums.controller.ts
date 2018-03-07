@@ -77,6 +77,10 @@ export class AlbumsController {
     @Query('ids') ids: string,
     @Query('market') market?: string
   ): Promise<SpotifyAlbum[]> {
-    return await this.albumsService.getSeveralAlbums(accessToken, ids, market);
+    return await this.albumsService.getSeveralAlbums(
+      accessToken,
+      ids.split(','),
+      market
+    );
   }
 }

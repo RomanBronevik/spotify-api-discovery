@@ -111,14 +111,14 @@ export class AlbumsService {
    * Get Several Albums
    *
    * @param {string} accessToken
-   * @param {string} ids
+   * @param {string[]} ids
    * @param {string} [market]
    * @returns {Promise<SpotifyAlbum[]>}
    * @memberof AlbumsService
    */
   public async getSeveralAlbums(
     accessToken: string,
-    ids: string,
+    ids: string[],
     market?: string
   ): Promise<SpotifyAlbum[]> {
     let response: AxiosResponse<{ albums: SpotifyAlbumAPIResponse[] }>;
@@ -126,7 +126,12 @@ export class AlbumsService {
     try {
       response = await this.spotifyClient.get<{
         albums: SpotifyAlbumAPIResponse[];
-      }>(`/albums?ids=${ids}${market ? `market=${market}` : ''}`, accessToken);
+      }>(
+        `/albums?ids=${ids.reduce((acc, id) => acc + `,${id}`, '')}${
+          market ? `market=${market}` : ''
+        }`,
+        accessToken
+      );
     } catch (error) {
       console.error(error);
     }

@@ -53,13 +53,13 @@ export class AudioFeaturesService {
    * Get Audio Features for Several Tracks
    *
    * @param {string} accessToken
-   * @param {string} id
+   * @param {string[]} ids
    * @returns {Promise<SpotifyAudioFeatures>}
    * @memberof AudioFeaturesService
    */
   public async getSeveralTracksAudioFeatures(
     accessToken: string,
-    ids: string
+    ids: string[]
   ): Promise<SpotifyAudioFeatures[]> {
     let response: AxiosResponse<{
       audio_features: SpotifyAudioFeaturesAPIResponse[];
@@ -68,7 +68,10 @@ export class AudioFeaturesService {
     try {
       response = await this.spotifyClient.get<{
         audio_features: SpotifyAudioFeaturesAPIResponse[];
-      }>(`/audio-features/${ids}`, accessToken);
+      }>(
+        `/audio-features/${ids.reduce((acc, id) => acc + `,${id}`, '')}`,
+        accessToken
+      );
     } catch (error) {
       console.error(error);
     }

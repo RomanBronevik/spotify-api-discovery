@@ -4,8 +4,20 @@ import { AccessToken } from './../../authentication/access-token.decorator';
 import { AudioFeaturesService } from './audio-features.service';
 import { SpotifyAudioFeatures } from './classes/spotify-audio-features.class';
 
+/**
+ * AudioFeaturesController
+ *
+ * @export
+ * @class AudioFeaturesController
+ */
 @Controller('audio-features')
 export class AudioFeaturesController {
+  /**
+   * Creates an instance of AudioFeaturesController.
+   *
+   * @param {AudioFeaturesService} audioFeaturesService
+   * @memberof AudioFeaturesController
+   */
   constructor(private audioFeaturesService: AudioFeaturesService) {}
 
   /**
@@ -39,7 +51,7 @@ export class AudioFeaturesController {
   ): Promise<SpotifyAudioFeatures[]> {
     return this.audioFeaturesService.getSeveralTracksAudioFeatures(
       accessToken,
-      ids
+      ids.split(',')
     );
   }
 }

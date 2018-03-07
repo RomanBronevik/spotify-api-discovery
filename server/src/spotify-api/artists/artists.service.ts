@@ -66,14 +66,17 @@ export class ArtistsService {
    */
   public async getSeveralArtists(
     accessToken: string,
-    ids: string
+    ids: string[]
   ): Promise<SpotifyArtist[]> {
     let response: AxiosResponse<{ artists: SpotifyArtistAPIResponse[] }>;
 
     try {
       response = await this.spotifyClient.get<{
         artists: SpotifyArtistAPIResponse[];
-      }>(`/artists?ids=${ids}`, accessToken);
+      }>(
+        `/artists?ids=${ids.reduce((acc, id) => acc + `,${id}`, '')}`,
+        accessToken
+      );
     } catch (error) {
       console.error(error);
     }

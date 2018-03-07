@@ -55,14 +55,14 @@ export class TracksService {
    * Get Several Tracks
    *
    * @param {string} accessToken
-   * @param {string} ids
+   * @param {string[]} ids
    * @param {string} [market]
    * @returns {Promise<SpotifyTrack>}
    * @memberof TracksController
    */
   public async getSeveralTracks(
     accessToken: string,
-    ids: string,
+    ids: string[],
     market?: string
   ): Promise<SpotifyTrack[]> {
     let response: AxiosResponse<{ tracks: SpotifyTrackAPIResponse[] }>;
@@ -70,7 +70,12 @@ export class TracksService {
     try {
       response = await this.spotifyClient.get<{
         tracks: SpotifyTrackAPIResponse[];
-      }>(`/tracks?ids=${ids}${market ? `?market=${market}` : ''}`, accessToken);
+      }>(
+        `/tracks?ids=${ids.reduce((acc, id) => acc + `,${id}`, '')}${
+          market ? `?market=${market}` : ''
+        }`,
+        accessToken
+      );
     } catch (error) {
       console.error(error);
     }

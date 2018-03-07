@@ -52,7 +52,10 @@ export class ArtistsController {
     @AccessToken() accessToken: string,
     @Query('ids') ids: string
   ): Promise<SpotifyArtist[]> {
-    return await this.artistsService.getSeveralArtists(accessToken, ids);
+    return await this.artistsService.getSeveralArtists(
+      accessToken,
+      ids.split(',')
+    );
   }
 
   /**
